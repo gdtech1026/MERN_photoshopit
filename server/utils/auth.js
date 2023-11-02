@@ -1,4 +1,4 @@
-
+const { GraphQLError } = require('graphql');
 const jwt = require('jsonwebtoken');
 
 // set token secret and expiration date
@@ -6,6 +6,12 @@ const secret = 'mysecrettoken-noonecanknow';
 const expiration = '2h';
 
 module.exports = {
+
+  AuthenticationError: new GraphQLError('Could not authenticate user.', {
+    extensions: {
+      code: 'UNAUTHENTICATED',
+    },
+  }),
 
   authMiddleware: function (req, res, next) {
 
@@ -27,7 +33,7 @@ module.exports = {
       return res.status(400).json({ message: 'invalid token!' });
     }
 
-    next();
+    return req;
   },
   signToken: function ({ username, email, _id }) {
     const payload = { username, email, _id };
