@@ -1,6 +1,13 @@
+
+// Must remove later
+
+// This section will need to be adjusted for other photos 
+
+// May have to move this to seeders folder
+
 const db = require("../config/connection");
 const models = require("../models");
-const profileSeeds = require("./profileSeeds.json");
+// const profileSeeds = require("./profileSeeds.json");
 
 async function cleanDB(modelName, collectionName) {
   // eslint-disable-next-line no-useless-catch

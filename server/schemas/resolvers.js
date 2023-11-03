@@ -1,6 +1,6 @@
+const { GraphQLError } = require("graphql");
 
-
-const { signToken, AuthenticationError } = require('../utils/auth');
+const { signToken, AuthenticationError } = require('../utils/jwt');
 
 
 const { Photo, User } = require('../models');
@@ -18,40 +18,60 @@ const resolvers = {
 
         Mutation: {
 
-            addUser: async (parent, { username, email, password }) => {
+            addUser: async (_, args, { username, email, password }) => {
 
-                console.log(" Hello " + email);
+                try {
+                    const user = await User.create(args);
+                    const token = signToken({
+                        _id: user._id,
+                        email: user.email,
+                        name: user.name,
+                    });
 
-                const user = await User.create({ username, email, password });
+                    return { token };
+                } catch (error) {
+                    return new GraphQLError("Invalid Sign Up", {
+                        extensions: {
+                            code: "BAD_USER_INPUT",
+                        },
+                    });
+                }
 
-                console.log(" After create User ");
 
-                const token = signToken(user);
+                // const user = await User.create({ username, email, password });
 
-                return { token, user };
+                // const token = signToken(user);
+
+                // return { token, user };
 
             },
-            login: async (parent, { email, password }) => {
-                const user = await User.findOne({ email });
+            login: async (_, args, { email, password }) => {
+                const user = await User.findOne({ email: args.email, });
 
                 if (!user) {
                     throw AuthenticationError;
                 }
 
-                const correctPw = await user.isCorrectPassword(password);
+                const correctPw = await user.isCorrectPassword(args.password);
 
-                if (!correctPw) {
+                if (correctPw) {
+                    const token = signToken({
+                        _id: user._id,
+                        email: user.email,
+                        name: user.name,
+                    });
+
+                    return { token };
+                } else {
                     throw AuthenticationError;
                 }
 
-                const token = signToken(user);
-                return { token, user };
+                // const token = signToken(user);
+                // return { token, user };
             },
 
             addPhoto: async (parent, { userId, photo }, context) => {
-                console.log("user and photo" + userId, Photo)
                 if (context.user) {
-                    console.log("context.user " + context.user)
                     return await User.findOneAndUpdate(
                         {
                             _id: userId
