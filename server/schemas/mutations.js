@@ -83,5 +83,3 @@ mutation RemovePhoto($photo: String!) {
   }
 }
 `;
-
-

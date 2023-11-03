@@ -7,21 +7,36 @@ type User {
     name: String
     email: String
     password: String
-    photos: [String]!
+    photos: [String]
   }
 
   type Photo {
     title: String!
-    bookId: String
-    authors: [String]
-    description: String
-    image: String
-    link: String
+    photoId: String
+    description: String!
+    imagelink: String
+    date: String
   }
 
   type Auth {
     token: ID!
     profile: Profile
+  }
+
+  input User {
+    _id: ID
+    name: String
+    email: String
+    password: String
+    photos: [String]
+  }
+
+  input photoInput {
+    title: String!
+    photoId: String
+    description: String!
+    imagelink: String
+    date: String
   }
 
   type Query {
@@ -36,9 +51,8 @@ type User {
 
     removeUserprofileId: ID!): User
 
-    removePhoto(book: String!): User
+    removePhoto(photo: String!): User
   }
-
 
 `
 
