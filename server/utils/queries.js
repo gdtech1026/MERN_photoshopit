@@ -8,13 +8,12 @@ query me {
     username
     email
     password
-    books {
+    photos {
       title
-      bookId
-      authors
+      photoId
       description
-      image
-      link
+      imagelink
+      date
     }
   }
 }

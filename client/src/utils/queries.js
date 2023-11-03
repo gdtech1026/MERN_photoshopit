@@ -11,12 +11,11 @@ query me {
     email
     password
     books {
-      title
-      bookId
-      authors
-      description
-      image
-      link
+        title
+        photoId
+        description
+        imagelink
+        date
     }
   }
 }

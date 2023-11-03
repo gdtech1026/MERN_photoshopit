@@ -13,10 +13,9 @@ mutation login($email: String!, $password: String!) {
       photos {
         title
         photoId
-        authors
         description
-        image
-        link
+        imagelink
+        date
       }
     }
   }
@@ -35,10 +34,9 @@ mutation addUser($username: String!, $email: String!, $password: String!) {
       photos {
         title
         photoId
-        authors
         description
-        image
-        link
+        imagelink
+        date
       }
     }
   }
@@ -56,10 +54,9 @@ mutation savePhoto($profileId: ID!, $photo: PhotoInput!) {
       photos {
         title
         photoId
-        authors
         description
-        image
-        link
+        imagelink
+        date
       }
     }
   }
@@ -73,12 +70,11 @@ mutation RemovePhoto($photo: String!) {
     email
     password
     photos {
-      title
-      photoId
-      authors
-      description
-      image
-      link
+        title
+        photoId
+        description
+        imagelink
+        date
     }
   }
 }

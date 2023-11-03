@@ -49,7 +49,6 @@ const resolvers = {
             },
 
             addPhoto: async (parent, { profileId, photo }, context) => {
-                // If context has a `user` property, meaning if the user is loggedin, this will trigger this will assign a new photo
                 console.log("profile and photo" + profileId, Photo)
                 if (context.user) {
                     console.log("context.user " + context.user)
@@ -69,7 +68,6 @@ const resolvers = {
                             console.log(err);
                         })
                 }
-                // If user asks to add a photo and isn't logged in, it will throw an error
                 throw AuthenticationError;
             },
 
