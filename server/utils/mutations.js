@@ -45,7 +45,7 @@ mutation addUser($username: String!, $email: String!, $password: String!) {
 
 export const SAVE_PHOTO = gql`
 
-mutation savePhoto($profileId: ID!, $photo: PhotoInput!) {
+mutation savePhoto($profileId: ID!, $photo: photoInput!) {
     addPhoto(profileId: $profileId, photo: $photo) {
       _id
       username

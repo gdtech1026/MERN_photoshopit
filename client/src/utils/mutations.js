@@ -1,6 +1,10 @@
 
 import { gql } from '@apollo/client';
 
+// Must delete later 
+
+// Send USER_LOGIN to loginform component
+
 export const LOGIN_USER = gql`
 mutation login($email: String!, $password: String!) {
     login(email: $email, password: $password) {
@@ -21,6 +25,10 @@ mutation login($email: String!, $password: String!) {
   }
 }
 `;
+
+// Must delete later 
+
+// Send ADD_USER to SignUpform component
 
 export const ADD_USER = gql`
 mutation addUser($username: String!, $email: String!, $password: String!) {
@@ -43,6 +51,12 @@ mutation addUser($username: String!, $email: String!, $password: String!) {
 }
 `;
 
+  // Must delete later 
+
+  // using challenge 21 as a reference but also accounting for the createPost component 
+
+// Send SAVE_PHOTO to createPost component
+
 export const SAVE_PHOTO = gql`
 
 mutation savePhoto($profileId: ID!, $photo: PhotoInput!) {
@@ -62,8 +76,12 @@ mutation savePhoto($profileId: ID!, $photo: PhotoInput!) {
   }
   `;
 
+    // Must delete later 
+
+// Send REMOVE_PHOTO to yourPosts Page 
+
   export const REMOVE_PHOTO = gql`
-mutation RemovePhoto($photo: String!) {
+mutation removePhoto($photo: String!) {
   removePhoto(photo: $photo) {
     _id
     username

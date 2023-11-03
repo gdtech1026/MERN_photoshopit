@@ -2,6 +2,9 @@
 
 import { gql } from '@apollo/client';
 
+// Must delete later 
+
+// Send GET_ME to yourPosts Page 
 
 export const GET_ME = gql`
 query me {
@@ -10,7 +13,7 @@ query me {
     username
     email
     password
-    books {
+    photos {
         title
         photoId
         description

@@ -32,29 +32,29 @@ const resolvers = {
 
             },
             login: async (parent, { email, password }) => {
-                const profile = await User.findOne({ email });
+                const user = await User.findOne({ email });
 
-                if (!profile) {
+                if (!user) {
                     throw AuthenticationError;
                 }
 
-                const correctPw = await profile.isCorrectPassword(password);
+                const correctPw = await user.isCorrectPassword(password);
 
                 if (!correctPw) {
                     throw AuthenticationError;
                 }
 
-                const token = signToken(profile);
-                return { token, profile };
+                const token = signToken(user);
+                return { token, user };
             },
 
-            addPhoto: async (parent, { profileId, photo }, context) => {
-                console.log("profile and photo" + profileId, Photo)
+            addPhoto: async (parent, { userId, photo }, context) => {
+                console.log("user and photo" + userId, Photo)
                 if (context.user) {
                     console.log("context.user " + context.user)
                     return await User.findOneAndUpdate(
                         {
-                            _id: profileId
+                            _id: userId
                         },
                         {
                             $addToSet: { photos: photo },
