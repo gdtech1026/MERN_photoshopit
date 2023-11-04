@@ -23,7 +23,7 @@ type User {
     user: User
   }
 
-  input User {
+  input userInput {
     _id: ID
     name: String!
     email: String!

@@ -25,7 +25,8 @@ const resolvers = {
                     const token = signToken({
                         _id: user._id,
                         email: user.email,
-                        name: user.name,
+                        username: user.username,
+                        password: user.password,
                     });
 
                     return { token };
@@ -58,7 +59,8 @@ const resolvers = {
                     const token = signToken({
                         _id: user._id,
                         email: user.email,
-                        name: user.name,
+                        username: user.username,
+                        password: user.password,
                     });
 
                     return { token };
