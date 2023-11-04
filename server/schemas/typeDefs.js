@@ -20,14 +20,14 @@ type User {
 
   type Auth {
     token: ID!
-    profile: Profile
+    user: User
   }
 
   input User {
     _id: ID
-    name: String
-    email: String
-    password: String
+    name: String!
+    email: String!
+    password: String!
     photos: [String]
   }
 
@@ -45,11 +45,11 @@ type User {
 
   type Mutation {
     login(email: String!, password: String!): Auth
-    adduser(name: String!, email: String!, password: String!): Auth
+    addUser(name: String!, email: String!, password: String!): Auth
 
-    savePhoto(profileId: ID!, skill: String!): User
+    savePhoto(userId: ID!, photo: String!): User
 
-    removeUserprofileId: ID!): User
+    removeUser(userId: ID!): User
 
     removePhoto(photo: String!): User
   }

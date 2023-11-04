@@ -8,7 +8,7 @@ const { Photo, User } = require('../models');
 
 const resolvers = {
     Query: {
-        me: async (parent, args, context, { _id }) => {
+        me: async (context, { _id }) => {
             if (context.user) {
                 const params = _id ? { _id } : {};
                 return User.find(params);
@@ -70,7 +70,7 @@ const resolvers = {
                 // return { token, user };
             },
 
-            addPhoto: async (parent, { userId, photo }, context) => {
+            addPhoto: async ({ userId, photo }, context) => {
                 if (context.user) {
                     return await User.findOneAndUpdate(
                         {
@@ -91,7 +91,7 @@ const resolvers = {
                 throw AuthenticationError;
             },
 
-            removePhoto: async (parent, { photo }, context) => {
+            removePhoto: async ({ photo }, context) => {
                 if (context.user) {
                     return User.findOneAndUpdate(
                         { _id: context.user._id },
