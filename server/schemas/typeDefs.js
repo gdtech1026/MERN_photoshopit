@@ -3,11 +3,23 @@
 const typeDefs = `
 
 type User {
-    _id: ID
-    name: String
-    email: String
-    password: String
+    _id: ID!
+    name: String!
+    email: String!
+    password: String!
     photos: [String]
+  }
+
+  type Auth {
+    token: String!
+  }
+
+  type Query {
+    # me: User
+
+    me(userId:ID!): User
+
+    users: [User]
   }
 
   type Photo {
@@ -16,11 +28,6 @@ type User {
     description: String!
     imagelink: String
     date: String
-  }
-
-  type Auth {
-    token: ID!
-    user: User
   }
 
   input userInput {
@@ -37,10 +44,6 @@ type User {
     description: String!
     imagelink: String
     date: String
-  }
-
-  type Query {
-    me: User
   }
 
   type Mutation {

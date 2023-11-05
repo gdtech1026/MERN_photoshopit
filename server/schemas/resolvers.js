@@ -1,9 +1,7 @@
 const { GraphQLError } = require("graphql");
+const { Photo, User } = require('../models');
 
 const { signToken, AuthenticationError } = require('../utils/jwt');
-
-
-const { Photo, User } = require('../models');
 
 
 const resolvers = {
@@ -18,7 +16,7 @@ const resolvers = {
 
         Mutation: {
 
-            addUser: async (_, args, { username, email, password }) => {
+            addUser: async (_, args, /*{ username, email, password }*/) => {
 
                 try {
                     const user = await User.create(args);
@@ -46,30 +44,25 @@ const resolvers = {
                 // return { token, user };
 
             },
-            login: async (_, args, { email, password }) => {
-                const user = await User.findOne({ email: args.email, });
+            login: async (_, args, /*{ email, password }*/) => {
+                try {
+                    const user = await User.findOne({ email: args.email, });
 
-                if (!user) {
-                    throw AuthenticationError;
+                    const correctPw = await user.isCorrectPassword(args.password);
+
+                    if (correctPw) {
+                        const token = signToken({
+                            _id: user._id,
+                            email: user.email,
+                            username: user.username,
+                            password: user.password,
+                        });
+
+                        return { token };
+                    }
+                } catch (error) {
+                    return error;
                 }
-
-                const correctPw = await user.isCorrectPassword(args.password);
-
-                if (correctPw) {
-                    const token = signToken({
-                        _id: user._id,
-                        email: user.email,
-                        username: user.username,
-                        password: user.password,
-                    });
-
-                    return { token };
-                } else {
-                    throw AuthenticationError;
-                }
-
-                // const token = signToken(user);
-                // return { token, user };
             },
 
             addPhoto: async ({ userId, photo }, context) => {
