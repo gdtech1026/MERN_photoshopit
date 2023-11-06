@@ -119,3 +119,32 @@ mutation removePhoto($photo: String!) {
   }
 }
 `;
+
+export const ADD_COMMENT = gql`
+
+mutation addComment($userId: ID!, $comment: commentInput!) {
+  addComment(userId: $userId, comment: $comment) {
+      _id
+      username
+      email
+      password
+      photos {
+        title
+        photoId
+        description
+        imagelink
+        date
+        thread {
+          comment {
+            editPhoto
+            user
+            date
+            text
+            likes 
+            dislikes
+          }
+        }
+      }
+    }
+  }
+  `;

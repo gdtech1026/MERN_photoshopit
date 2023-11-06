@@ -13,6 +13,14 @@ query Me {
       description
       imagelink
       date
+      thread {
+        comment {
+          editPhoto
+          user
+          date
+          likes 
+          dislikes
+        }
     }
   }
 }

@@ -96,6 +96,18 @@ const resolvers = {
                 }
                 throw AuthenticationError;
             },
+
+            addComment: async ({
+                
+            })
+
+
+
+
+
+
+
+
         },
     }
 

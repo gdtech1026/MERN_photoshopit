@@ -31,6 +31,19 @@ type User {
     threads: Int
   }
 
+  type Thread {
+    comments: [Comment]
+  }
+
+  type Comment {
+    editPhoto: String
+    user: String!
+    date: String!
+    text: String!
+    likes: Int!
+    dislikes: Int!
+  }
+
   input userInput {
     _id: ID
     name: String!
