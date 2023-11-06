@@ -16,6 +16,16 @@ mutation login($email: String!, $password: String!) {
         description
         imagelink
         date
+        thread {
+          comment {
+            editPhoto
+            user
+            date
+            text
+            likes 
+            dislikes
+          }
+        }
       }
     }
   }
@@ -37,15 +47,25 @@ mutation addUser($username: String!, $email: String!, $password: String!) {
         description
         imagelink
         date
+        thread {
+          comment {
+            editPhoto
+            user
+            date
+            text
+            likes 
+            dislikes
+          }
+        }
       }
     }
   }
 }
 `;
 
-export const SAVE_PHOTO = gql`
+export const ADD_PHOTO = gql`
 
-mutation savePhoto($userId: ID!, $photo: photoInput!) {
+mutation addPhoto($userId: ID!, $photo: photoInput!) {
     addPhoto(userId: $userId, photo: $photo) {
       _id
       username
@@ -57,13 +77,23 @@ mutation savePhoto($userId: ID!, $photo: photoInput!) {
         description
         imagelink
         date
+        thread {
+          comment {
+            editPhoto
+            user
+            date
+            text
+            likes 
+            dislikes
+          }
+        }
       }
     }
   }
   `;
 
 export const REMOVE_PHOTO = gql`
-mutation RemovePhoto($photo: String!) {
+mutation removePhoto($photo: String!) {
   removePhoto(photo: $photo) {
     _id
     username
@@ -75,6 +105,16 @@ mutation RemovePhoto($photo: String!) {
       description
       imagelink
       date
+      thread {
+        comment {
+          editPhoto
+          user
+          date
+          text
+          likes 
+          dislikes
+        }
+      }
     }
   }
 }

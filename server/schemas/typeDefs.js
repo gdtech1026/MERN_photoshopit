@@ -28,6 +28,7 @@ type User {
     description: String!
     imagelink: String
     date: String
+    threads: Int
   }
 
   input userInput {

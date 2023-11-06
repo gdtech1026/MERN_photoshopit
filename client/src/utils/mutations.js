@@ -20,6 +20,16 @@ mutation login($email: String!, $password: String!) {
         description
         imagelink
         date
+        thread {
+            comment {
+              editPhoto
+              user
+              date
+              text
+              likes 
+              dislikes
+            }
+          }
       }
     }
   }
@@ -45,15 +55,25 @@ mutation addUser($username: String!, $email: String!, $password: String!) {
         description
         imagelink
         date
+        thread {
+            comment {
+              editPhoto
+              user
+              date
+              text
+              likes 
+              dislikes
+            }
+          }
       }
     }
   }
 }
 `;
 
-  // Must delete later 
+// Must delete later 
 
-  // using challenge 21 as a reference but also accounting for the createPost component 
+// using challenge 21 as a reference but also accounting for the createPost component 
 
 // Send SAVE_PHOTO to createPost component
 
@@ -71,16 +91,26 @@ mutation savePhoto($userId: ID!, $photo: PhotoInput!) {
         description
         imagelink
         date
+        thread {
+            comment {
+              editPhoto
+              user
+              date
+              text
+              likes 
+              dislikes
+            }
+          }
       }
     }
   }
   `;
 
-    // Must delete later 
+// Must delete later 
 
 // Send REMOVE_PHOTO to yourPosts Page 
 
-  export const REMOVE_PHOTO = gql`
+export const REMOVE_PHOTO = gql`
 mutation removePhoto($photo: String!) {
   removePhoto(photo: $photo) {
     _id
@@ -93,6 +123,16 @@ mutation removePhoto($photo: String!) {
         description
         imagelink
         date
+        thread {
+            comment {
+              editPhoto
+              user
+              date
+              text
+              likes 
+              dislikes
+            }
+          }
     }
   }
 }
