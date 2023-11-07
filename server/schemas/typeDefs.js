@@ -16,6 +16,11 @@ type User {
 
   type Query {
     me(userId:ID!): User
+
+    comments: Comment
+
+    photos: Photo
+
   }
 
   type Photo {

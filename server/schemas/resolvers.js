@@ -65,7 +65,7 @@ const resolvers = {
                         _id: userId
                     },
                     {
-                        $addToSet: { photo: photo },
+                        $addToSet: { photos: photo },
                     },
                     {
                         new: true,
@@ -83,7 +83,7 @@ const resolvers = {
             if (context.user) {
                 return User.findOneAndUpdate(
                     { _id: context.user._id },
-                    { $pull: { photo: photo } },
+                    { $pull: { photos: photo } },
                     { new: true }
                 );
             }
@@ -97,7 +97,7 @@ const resolvers = {
                         _id: photoId
                     },
                     {
-                        $addToSet: { comment: comment },
+                        $addToSet: { comments: comment },
                     },
                     {
                         new: true,
@@ -117,7 +117,7 @@ const resolvers = {
             if (context.user) {
                 return Photo.findOneAndUpdate(
                     { _id: context.photo._id },
-                    { $pull: { comment: comment } },
+                    { $pull: { comments: comment } },
                     { new: true }
                 );
             }
