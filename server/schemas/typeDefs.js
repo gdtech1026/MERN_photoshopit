@@ -7,7 +7,7 @@ type User {
     name: String!
     email: String!
     password: String!
-    photos: [String]
+    photos: [Photo]
   }
 
   type Auth {
@@ -28,6 +28,7 @@ type User {
     description: String!
     imagelink: String
     date: String
+    comments: [Comment]
   }
 
   input userInput {
