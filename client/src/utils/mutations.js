@@ -67,12 +67,6 @@ mutation addUser($username: String!, $email: String!, $password: String!) {
 }
 `;
 
-// Must delete later 
-
-// using challenge 21 as a reference but also accounting for the createPost component 
-
-// Send SAVE_PHOTO to createPost component
-
 export const ADD_PHOTO = gql`
 
 mutation addPhoto($userId: ID!, $photo: PhotoInput!) {
@@ -99,10 +93,6 @@ mutation addPhoto($userId: ID!, $photo: PhotoInput!) {
     }
   }
   `;
-
-// Must delete later 
-
-// Send REMOVE_PHOTO to yourPosts Page 
 
 export const REMOVE_PHOTO = gql`
 mutation removePhoto($photo: String!) {

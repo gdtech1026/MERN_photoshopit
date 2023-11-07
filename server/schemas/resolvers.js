@@ -12,9 +12,11 @@ const resolvers = {
                 return User.find(params);
             }
 
-        },
+            
 
+        },
     },
+
     Mutation: {
 
         addUser: async (_, args, /*{ username, email, password }*/) => {
@@ -29,8 +31,16 @@ const resolvers = {
                 });
 
                 return { token };
+
+                // const user = await User.create({ username, email, password });
+
+                // console.log(" After create User ");
+    
+                // const token = signToken(user);
+    
+                // return { token, user };
             } catch (error) {
-                return new GraphQLError("Invalid Sign Up", {
+                return new GraphQLError("Invalid Sign Up" + error, {
                     extensions: {
                         code: "BAD_USER_INPUT",
                     },

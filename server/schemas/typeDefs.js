@@ -16,11 +16,8 @@ type User {
 
   type Query {
     me(userId:ID!): User
-
     comments: Comment
-
     photos: Photo
-
   }
 
   type Photo {
@@ -59,11 +56,16 @@ type User {
 
   type Mutation {
     login(email: String!, password: String!): Auth
+
     addUser(name: String!, email: String!, password: String!): Auth
 
     addPhoto(userId: ID!, photo: String!): User
 
     removePhoto(photo: String!): User
+
+    addComment(photoId: ID!, comment: String!): Photo
+
+    removeComment(comment: String!): Photo
   }
 
 `
