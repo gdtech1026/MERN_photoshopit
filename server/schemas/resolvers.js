@@ -11,8 +11,11 @@ const resolvers = {
                 const params = _id ? { _id } : {};
                 return User.find(params);
             }
+        comments: () => {
+                return Photo.find();
+        }
+            photos: Photo
 
-            
 
         },
     },
