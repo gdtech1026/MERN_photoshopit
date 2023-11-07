@@ -6,6 +6,9 @@ const commentSchema = new Schema(
       type: Schema.Types.ObjectId,
       default: () => new Types.ObjectId(),
     },
+    imageLink: {
+      type: String,
+    },
     commentBody: {
       type: String,
       required: true,
