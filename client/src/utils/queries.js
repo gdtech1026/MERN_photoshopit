@@ -19,7 +19,16 @@ query me {
         description
         imagelink
         date
+        comment {
+          editPhoto
+          user
+          date
+          text
+          likes 
+          dislikes
+      }
     }
   }
 }
 `;
+

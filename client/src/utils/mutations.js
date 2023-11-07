@@ -20,16 +20,14 @@ mutation login($email: String!, $password: String!) {
         description
         imagelink
         date
-        thread {
-            comment {
-              editPhoto
-              user
-              date
-              text
-              likes 
-              dislikes
-            }
-          }
+        comment {
+          editPhoto
+          user
+          date
+          text
+          likes 
+          dislikes
+      }
       }
     }
   }
@@ -55,16 +53,14 @@ mutation addUser($username: String!, $email: String!, $password: String!) {
         description
         imagelink
         date
-        thread {
-            comment {
-              editPhoto
-              user
-              date
-              text
-              likes 
-              dislikes
-            }
-          }
+        comment {
+          editPhoto
+          user
+          date
+          text
+          likes 
+          dislikes
+      }
       }
     }
   }
@@ -77,9 +73,9 @@ mutation addUser($username: String!, $email: String!, $password: String!) {
 
 // Send SAVE_PHOTO to createPost component
 
-export const SAVE_PHOTO = gql`
+export const ADD_PHOTO = gql`
 
-mutation savePhoto($userId: ID!, $photo: PhotoInput!) {
+mutation addPhoto($userId: ID!, $photo: PhotoInput!) {
     addPhoto(userId: $userId, photo: $photo) {
       _id
       username
@@ -91,16 +87,14 @@ mutation savePhoto($userId: ID!, $photo: PhotoInput!) {
         description
         imagelink
         date
-        thread {
-            comment {
-              editPhoto
-              user
-              date
-              text
-              likes 
-              dislikes
-            }
-          }
+        comment {
+          editPhoto
+          user
+          date
+          text
+          likes 
+          dislikes
+        }
       }
     }
   }
@@ -123,19 +117,45 @@ mutation removePhoto($photo: String!) {
         description
         imagelink
         date
-        thread {
-            comment {
-              editPhoto
-              user
-              date
-              text
-              likes 
-              dislikes
-            }
-          }
+        comment {
+          editPhoto
+          user
+          date
+          text
+          likes 
+          dislikes
+      }
     }
   }
 }
 `;
+
+
+export const ADD_COMMENT = gql`
+
+mutation addComment($userId: ID!, $comment: commentInput!) {
+  addComment(userId: $userId, comment: $comment) {
+      _id
+      username
+      email
+      password
+      photos {
+        title
+        photoId
+        description
+        imagelink
+        date
+        comment {
+          editPhoto
+          user
+          date
+          text
+          likes 
+          dislikes
+        }
+      }
+    }
+  }
+  `;
 
 

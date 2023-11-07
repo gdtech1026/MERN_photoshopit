@@ -14,12 +14,36 @@ const resolvers = {
 
         },
 
-        Mutation: {
+    },
+    Mutation: {
 
-            addUser: async (_, args, /*{ username, email, password }*/) => {
+        addUser: async (_, args, /*{ username, email, password }*/) => {
 
-                try {
-                    const user = await User.create(args);
+            try {
+                const user = await User.create(args);
+                const token = signToken({
+                    _id: user._id,
+                    email: user.email,
+                    username: user.username,
+                    password: user.password,
+                });
+
+                return { token };
+            } catch (error) {
+                return new GraphQLError("Invalid Sign Up", {
+                    extensions: {
+                        code: "BAD_USER_INPUT",
+                    },
+                });
+            }
+        },
+        login: async (_, args, /*{ email, password }*/) => {
+            try {
+                const user = await User.findOne({ email: args.email, });
+
+                const correctPw = await user.isCorrectPassword(args.password);
+
+                if (correctPw) {
                     const token = signToken({
                         _id: user._id,
                         email: user.email,
@@ -28,89 +52,80 @@ const resolvers = {
                     });
 
                     return { token };
-                } catch (error) {
-                    return new GraphQLError("Invalid Sign Up", {
-                        extensions: {
-                            code: "BAD_USER_INPUT",
-                        },
-                    });
                 }
+            } catch (error) {
+                return error;
+            }
+        },
 
-
-                // const user = await User.create({ username, email, password });
-
-                // const token = signToken(user);
-
-                // return { token, user };
-
-            },
-            login: async (_, args, /*{ email, password }*/) => {
-                try {
-                    const user = await User.findOne({ email: args.email, });
-
-                    const correctPw = await user.isCorrectPassword(args.password);
-
-                    if (correctPw) {
-                        const token = signToken({
-                            _id: user._id,
-                            email: user.email,
-                            username: user.username,
-                            password: user.password,
-                        });
-
-                        return { token };
+        addPhoto: async ({ userId, photo }, context) => {
+            if (context.user) {
+                return await User.findOneAndUpdate(
+                    {
+                        _id: userId
+                    },
+                    {
+                        $addToSet: { photo: photo },
+                    },
+                    {
+                        new: true,
+                        runValidators: true,
                     }
-                } catch (error) {
-                    return error;
-                }
-            },
+                )
+                    .catch((err) => {
+                        console.log(err);
+                    })
+            }
+            throw AuthenticationError;
+        },
 
-            addPhoto: async ({ userId, photo }, context) => {
-                if (context.user) {
-                    return await User.findOneAndUpdate(
-                        {
-                            _id: userId
-                        },
-                        {
-                            $addToSet: { photos: photo },
-                        },
-                        {
-                            new: true,
-                            runValidators: true,
-                        }
-                    )
-                        .catch((err) => {
-                            console.log(err);
-                        })
-                }
-                throw AuthenticationError;
-            },
+        removePhoto: async ({ photo }, context) => {
+            if (context.user) {
+                return User.findOneAndUpdate(
+                    { _id: context.user._id },
+                    { $pull: { photo: photo } },
+                    { new: true }
+                );
+            }
+            throw AuthenticationError;
+        },
 
-            removePhoto: async ({ photo }, context) => {
-                if (context.user) {
-                    return User.findOneAndUpdate(
-                        { _id: context.user._id },
-                        { $pull: { photos: photo } },
-                        { new: true }
-                    );
-                }
-                throw AuthenticationError;
-            },
-
-            addComment: async ({
-                
-            })
-
-
-
-
-
-
-
+        addComment: async ({ photoId, comment }, context) => {
+            if (context.user) {
+                return await Photo.findOneAndUpdate(
+                    {
+                        _id: photoId
+                    },
+                    {
+                        $addToSet: { comment: comment },
+                    },
+                    {
+                        new: true,
+                        runValidators: true,
+                    }
+                )
+                    .catch((err) => {
+                        console.log(err);
+                    })
+            }
+            throw AuthenticationError;
 
         },
-    }
 
+        
+        removeComment: async ({ comment }, context) => {
+            if (context.user) {
+                return Photo.findOneAndUpdate(
+                    { _id: context.photo._id },
+                    { $pull: { comment: comment } },
+                    { new: true }
+                );
+            }
+            throw AuthenticationError;
+        },
+    }
 }
+
+
 
 module.exports = resolvers;
