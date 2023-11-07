@@ -7,7 +7,7 @@ type User {
     name: String!
     email: String!
     password: String!
-    photo: [Photo]
+    photos: [Photo]
   }
 
   type Auth {
@@ -22,11 +22,11 @@ type User {
 
   type Photo {
     title: String!
-    photoId: String
+    photoId: String!
     description: String!
-    imagelink: String
-    date: String
-    comment: [Comment]
+    imagelink: String!
+    date: String!
+    comments: [Comment]
   }
 
   type Comment {
@@ -36,6 +36,7 @@ type User {
     text: String!
     likes: Int!
     dislikes: Int!
+    commentId: String!
   }
 
   input userInput {
@@ -48,10 +49,8 @@ type User {
 
   input photoInput {
     title: String!
-    photoId: String
     description: String!
-    imagelink: String
-    date: String
+    imagelink: String!
   }
 
   type Mutation {
@@ -59,13 +58,13 @@ type User {
 
     addUser(name: String!, email: String!, password: String!): Auth
 
-    addPhoto(userId: ID!, photo: String!): User
+    addPhoto(photo: photoInput!): User
 
-    removePhoto(photo: String!): User
+    removePhoto(photoId: ID!): User
 
     addComment(photoId: ID!, comment: String!): Photo
 
-    removeComment(comment: String!): Photo
+    removeComment(photoId: ID!, commentId: ID!): Photo
   }
 
 `

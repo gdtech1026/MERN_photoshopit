@@ -45,7 +45,7 @@ query getPhoto {
         description
         imagelink
         date
-        comment {
+        comments {
           editPhoto
           user
           date
