@@ -1,8 +1,7 @@
-
-
 const { Schema, model, Types } = require('mongoose');
+const commentSchema = require('./Comment');
 
-const bookSchema = new Schema({
+const photoSchema = new Schema({
     title: {
         type: String,
         required: true,
@@ -15,12 +14,13 @@ const bookSchema = new Schema({
         type: String,
         required: true,
     },
-    iamgelink: {
+    imagelink: {
         type: String,
     },
     date: {
         type: String,
     },
+    comments: [commentSchema],
 });
 
 module.exports = photoSchema;
