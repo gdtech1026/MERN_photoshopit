@@ -1,30 +1,13 @@
-import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
-import Login from "./Login";
-import Profiles from "./Profiles";
-
-const client = new ApolloClient({
-  uri: "/graphql",
-  cache: new InMemoryCache(),
-});
-
-const App = () => (
-  <ApolloProvider client={client}>
-    <div>
-      <Login />
-      <Profiles />
-    </div>
-  </ApolloProvider>
-);
-
-export default App;
-import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
+import './App.css';
+import {
+    ApolloClient, InMemoryCache, ApolloProvider,
+    createHttpLink,
+} from '@apollo/client';
 // Bringing in the required import from 'react-router-dom'
-import { Outlet } from 'react-router-dom';
 import { setContext } from '@apollo/client/link/context';
+import { Outlet } from 'react-router-dom';
 import Nav from './components/Navbar';
 import Footer from './components/Footer';
-
-
 
 const httpLink = createHttpLink({
     uri: '/graphql',

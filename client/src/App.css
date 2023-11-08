@@ -1,0 +1,167 @@
+/*
+
+Colors:
+
+Jet blue: #3C3744
+Duke blue: #44458a
+True blue: #3066BE
+Powder blue: #B4C5E4
+Ivory: #FBFFF1
+
+*/
+
+#root {
+    padding: 2rem;
+    text-align: center;
+    --Dark-green: #344E41;
+    --Green: #3A5A40;
+    --True-blue: #588157;
+    --Powder-blue: #A3B18A;
+    --Sand: #DAD7CD;
+  
+    --header-font: 'Cochin', Georgia, Times, Times New Roman, serif;
+    --font: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    --radius: 8px;
+  }
+  
+  * {
+    background-color: var(--Jet-blue);
+    box-sizing: border-box;
+    padding-left: 30px;
+    padding-right: 30px;
+  }
+  
+  header {
+    font-family: var(--True-blue);
+    border-radius: var(--radius);
+    margin-left: -35px;
+    margin-top: -10px;
+    margin-bottom: 20px;
+    align-items: center;
+    display: block;
+    justify-content: space-between;
+  }
+  
+  /*-------------------------------------------------*/
+  /* Nav section*/
+  
+  nav {
+    background-color: var(--Jet-blue);
+    border-radius: var(--radius);
+    float: left;
+    bottom: -5px;
+    right: 0px;
+  }
+  
+  ul {
+    list-style: none;
+    position: relative;
+  }
+  
+  ul li {
+    display: inline-block;
+    padding: 20px;
+    /* flex adjusts by flex grow, flex shrink and flex basis [aka default width]*/
+    flex: 1 1 50px;
+  }
+  
+  ul li a {
+    text-decoration: none;
+    color: var(--Ivory);
+    font-family: var(--header-font);
+    text-align: center;
+  }
+  
+  ul li a:hover {
+    color: var(--Powder-blue);
+    border-radius: var(--radius);
+    background-color: var(--Duke-blue);
+    font-weight: 600;
+    padding: 20px;
+    font-size: 18px;
+  }
+  
+  
+
+  ul li .current-page {
+    color: var(--Duke-blue);
+    background-color: var(--Powder-blue);
+    font-weight: 600;
+    padding: 20px;
+    font-size: 18px;
+    border-radius: var(--radius);
+  }
+  
+  /* ------------------------------ */
+  
+  /* Text and Headings */
+  
+  p {
+    font-weight: 600;
+    padding: 20px;
+    font-size: 18px;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    ;
+  }
+  
+  input {
+    padding: 10px;
+    margin: 20px;
+    background-color: var(--Ivory);
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  }
+  
+  .Message {
+    width: 300px;
+    height: 150px;
+    background-color: var(--Ivory);
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    ;
+  }
+  
+  button {
+    padding: 10px;
+    margin: 20px;
+    background-color: var(--True-blue);
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  }
+  
+  h1,
+  h2,
+  h3,
+  h4,
+  h5 {
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif
+  }
+  
+  /* ---------------------------------- */
+  /* For images */
+  
+  .image{
+    width: 200px;
+  }
+  
+  .Resume:hover{
+  width:420px;
+  padding:0px;
+  margin: 0px;
+  
+  }
+  
+  .logo {
+    width: 120px;
+    background-color: var(--Jet-blue);
+  }
+  
+  .lineUp {
+    display: inline-block;
+    text-align: center;
+    color: var(--Ivory);
+  
+  }
+  
+  .lineUp a {
+    color: var(--Ivory);
+    text-decoration: none;
+    
+  }
