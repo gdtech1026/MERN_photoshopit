@@ -20,6 +20,14 @@ mutation login($email: String!, $password: String!) {
         description
         imagelink
         date
+        comment {
+          editPhoto
+          user
+          date
+          text
+          likes 
+          dislikes
+      }
       }
     }
   }
@@ -45,21 +53,23 @@ mutation addUser($username: String!, $email: String!, $password: String!) {
         description
         imagelink
         date
+        comment {
+          editPhoto
+          user
+          date
+          text
+          likes 
+          dislikes
+      }
       }
     }
   }
 }
 `;
 
-  // Must delete later 
+export const ADD_PHOTO = gql`
 
-  // using challenge 21 as a reference but also accounting for the createPost component 
-
-// Send SAVE_PHOTO to createPost component
-
-export const SAVE_PHOTO = gql`
-
-mutation savePhoto($userId: ID!, $photo: PhotoInput!) {
+mutation addPhoto($userId: ID!, $photo: PhotoInput!) {
     addPhoto(userId: $userId, photo: $photo) {
       _id
       username
@@ -71,16 +81,20 @@ mutation savePhoto($userId: ID!, $photo: PhotoInput!) {
         description
         imagelink
         date
+        comment {
+          editPhoto
+          user
+          date
+          text
+          likes 
+          dislikes
+        }
       }
     }
   }
   `;
 
-    // Must delete later 
-
-// Send REMOVE_PHOTO to yourPosts Page 
-
-  export const REMOVE_PHOTO = gql`
+export const REMOVE_PHOTO = gql`
 mutation removePhoto($photo: String!) {
   removePhoto(photo: $photo) {
     _id
@@ -93,9 +107,45 @@ mutation removePhoto($photo: String!) {
         description
         imagelink
         date
+        comment {
+          editPhoto
+          user
+          date
+          text
+          likes 
+          dislikes
+      }
     }
   }
 }
 `;
+
+
+export const ADD_COMMENT = gql`
+
+mutation addComment($userId: ID!, $comment: commentInput!) {
+  addComment(userId: $userId, comment: $comment) {
+      _id
+      username
+      email
+      password
+      photos {
+        title
+        photoId
+        description
+        imagelink
+        date
+        comment {
+          editPhoto
+          user
+          date
+          text
+          likes 
+          dislikes
+        }
+      }
+    }
+  }
+  `;
 
 
