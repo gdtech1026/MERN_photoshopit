@@ -7,7 +7,7 @@ type User {
     name: String!
     email: String!
     password: String!
-    photos: [String]
+    photo: [Photo]
   }
 
   type Auth {
@@ -15,11 +15,9 @@ type User {
   }
 
   type Query {
-    # me: User
-
     me(userId:ID!): User
-
-    users: [User]
+    comments: Comment
+    photos: Photo
   }
 
   type Photo {
@@ -28,6 +26,16 @@ type User {
     description: String!
     imagelink: String
     date: String
+    comment: [Comment]
+  }
+
+  type Comment {
+    editPhoto: String
+    user: String!
+    date: String!
+    text: String!
+    likes: Int!
+    dislikes: Int!
   }
 
   input userInput {
@@ -48,13 +56,16 @@ type User {
 
   type Mutation {
     login(email: String!, password: String!): Auth
+
     addUser(name: String!, email: String!, password: String!): Auth
 
-    savePhoto(userId: ID!, photo: String!): User
-
-    removeUser(userId: ID!): User
+    addPhoto(userId: ID!, photo: String!): User
 
     removePhoto(photo: String!): User
+
+    addComment(photoId: ID!, comment: String!): Photo
+
+    removeComment(comment: String!): Photo
   }
 
 `
