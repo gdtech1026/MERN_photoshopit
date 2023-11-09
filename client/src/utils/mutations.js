@@ -53,7 +53,7 @@ mutation addUser($username: String!, $email: String!, $password: String!) {
         description
         imagelink
         date
-        comment {
+        comments {
           editPhoto
           user
           date
@@ -81,7 +81,7 @@ mutation addPhoto($userId: ID!, $photo: PhotoInput!) {
         description
         imagelink
         date
-        comment {
+        comments {
           editPhoto
           user
           date
@@ -107,7 +107,7 @@ mutation removePhoto($photo: String!) {
         description
         imagelink
         date
-        comment {
+        comments {
           editPhoto
           user
           date
@@ -135,7 +135,7 @@ mutation addComment($userId: ID!, $comment: commentInput!) {
         description
         imagelink
         date
-        comment {
+        comments {
           editPhoto
           user
           date

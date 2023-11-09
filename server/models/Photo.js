@@ -2,7 +2,7 @@
 
 const { Schema, model, Types } = require('mongoose');
 
-const bookSchema = new Schema({
+const photoSchema = new Schema({
     title: {
         type: String,
         required: true,
@@ -15,12 +15,18 @@ const bookSchema = new Schema({
         type: String,
         required: true,
     },
-    iamgelink: {
+    imagelink: {
         type: String,
+        required: true,
     },
     date: {
         type: String,
+        required: true,
     },
 });
+
+const Photo = model('Photo', photoSchema);
+
+module.exports = Photo;
 
 module.exports = photoSchema;
