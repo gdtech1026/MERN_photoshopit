@@ -11,7 +11,7 @@ import {
 import Auth from '../utils/auth';
 import { searchPhoto } from '../utils/API';
 import { useMutation } from '@apollo/client';
-import { ADD_PHOTO } from '../utils/mutations';
+import { GET_PHOTO } from '../utils/queries';
 import { savePhotoIds, getSavedPhotoIds } from '../utils/localStorage';
 
 const SearchPhoto = () => {
@@ -50,7 +50,7 @@ const SearchPhoto = () => {
                 username: photo.Info.username || ['No username to display'],
                 title: photo.Info.title,
                 description: photo.volumeInfo.description,
-                image: photo.volumeInfo.imageLinks?.thumbnail || '',
+                imagelink: photo.volumeInfo.imagelink?.thumbnail || '',
             }));
 
             setSearchedPhoto(photoData);
@@ -65,7 +65,7 @@ const SearchPhoto = () => {
         // find the book in `searchedPhoto` state by the matching id
         const photoToSave = searchedPhoto.find((photo) => photo.photoId === photoId);
 
-        const [savePhoto, { error, data }] = useMutation(SAVE_PHOTO);
+        const [savePhoto] = useQuery(GET_PHOTO);
 
         // get token
         const token = Auth.loggedIn() ? Auth.getToken() : null;
