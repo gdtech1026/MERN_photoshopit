@@ -3,7 +3,6 @@ const { Photo, User } = require('../models');
 
 const { signToken, AuthenticationError } = require('../utils/jwt');
 
-
 const resolvers = {
     Query: {
         me: async (context, { _id }) => {
@@ -11,10 +10,24 @@ const resolvers = {
                 const params = _id ? { _id } : {};
                 return User.find(params);
             }
-        comments: () => {
-                return Photo.find();
-        }
-            photos: Photo
+            // comments: async (context, { _id }) => {
+            //     if (context.user) {
+            //         return await 
+            //     }
+            //     // schools: async () => {
+            //     // return await School.find({}).populate('classes').populate({
+            //     //     path: 'classes',
+            //     //     populate: 'professor'
+            //     //   });
+            // }
+            // photos: async (context, { userId }) => {
+            //     if (context.user) {
+            //         return await Photo.find({}).populate('comments').populate({
+            //             path: 'comments',
+            //             populate: ''
+            //         })
+            //     }
+            // }
 
 
         },
@@ -35,13 +48,7 @@ const resolvers = {
 
                 return { token };
 
-                // const user = await User.create({ username, email, password });
 
-                // console.log(" After create User ");
-    
-                // const token = signToken(user);
-    
-                // return { token, user };
             } catch (error) {
                 return new GraphQLError("Invalid Sign Up" + error, {
                     extensions: {
@@ -71,11 +78,11 @@ const resolvers = {
             }
         },
 
-        addPhoto: async ({ userId, photo }, context) => {
+        addPhoto: async ({ photo }, context) => {
             if (context.user) {
                 return await User.findOneAndUpdate(
                     {
-                        _id: userId
+                        _id: context.user._id
                     },
                     {
                         $addToSet: { photos: photo },
@@ -125,11 +132,11 @@ const resolvers = {
 
         },
 
-        
+
         removeComment: async ({ comment }, context) => {
             if (context.user) {
                 return Photo.findOneAndUpdate(
-                    { _id: context.photo._id },
+                    { photoId: context.photo._id },
                     { $pull: { comments: comment } },
                     { new: true }
                 );

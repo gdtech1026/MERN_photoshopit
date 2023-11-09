@@ -16,11 +16,17 @@ const photoSchema = new Schema({
     },
     imagelink: {
         type: String,
+        required: true,
     },
     date: {
         type: String,
+        required: true,
     },
     comments: [commentSchema],
 });
+
+const Photo = model('Photo', photoSchema);
+
+module.exports = Photo;
 
 module.exports = photoSchema;

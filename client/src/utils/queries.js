@@ -45,7 +45,7 @@ query getPhoto {
         description
         imagelink
         date
-        comment {
+        comments {
           editPhoto
           user
           date
@@ -58,7 +58,7 @@ query getPhoto {
 }
 `;
 
-export const GTE_COMMENT = gql`
+export const GET_COMMENT = gql`
 query getCmment {
   comments {
     _id
