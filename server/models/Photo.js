@@ -25,6 +25,8 @@ const photoSchema = new Schema({
     },
 });
 
+const Photo = model('Photo', photoSchema);
 
+module.exports = Photo;
 
 module.exports = photoSchema;

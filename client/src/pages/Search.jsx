@@ -11,7 +11,7 @@ import {
 import Auth from '../utils/auth';
 import { searchPhoto } from '../utils/API';
 import { useMutation } from '@apollo/client';
-import { SAVE_PHOTO } from '../utils/mutations';
+import { ADD_PHOTO } from '../utils/mutations';
 import { savePhotoIds, getSavedPhotoIds } from '../utils/localStorage';
 
 const SearchPhoto = () => {
@@ -48,7 +48,7 @@ const SearchPhoto = () => {
             const photoData = items.map((photo) => ({
                 photoId: photo.id,
                 username: photo.Info.username || ['No username to display'],
-                title: photot.Info.title,
+                title: photo.Info.title,
                 description: photo.volumeInfo.description,
                 image: photo.volumeInfo.imageLinks?.thumbnail || '',
             }));
@@ -117,7 +117,7 @@ const SearchPhoto = () => {
 
             <Container>
                 <h2 className='pt-5'>
-                    {searchedBooks.length
+                    {searchedPhoto.length
                         ? `Viewing ${searchedPhoto.length} results:`
                         : 'Search for a photo to begin'}
                 </h2>
@@ -138,7 +138,7 @@ const SearchPhoto = () => {
                                                 disabled={savedPhotoIds?.some((savedPhotoId) => savedPhotoId === photo.photoId)}
                                                 className='btn-block btn-info'
                                                 onClick={() => handleSavePhoto(photo.photoId)}>
-                                                {savedBookIds?.some((savedPhotoId) => savedPhotoId === photo.PhotoId)
+                                                {savedPhotoIds?.some((savedPhotoId) => savedPhotoId === photo.PhotoId)
                                                     ? 'This book has already been saved!'
                                                     : 'Save this Book!'}
                                             </Button>
