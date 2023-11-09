@@ -1,6 +1,5 @@
-
-
 const { Schema, model, Types } = require('mongoose');
+const commentSchema = require('./Comment');
 
 const photoSchema = new Schema({
     title: {
@@ -23,6 +22,7 @@ const photoSchema = new Schema({
         type: String,
         required: true,
     },
+    comments: [commentSchema],
 });
 
 const Photo = model('Photo', photoSchema);
