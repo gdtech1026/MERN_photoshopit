@@ -35,7 +35,7 @@ const resolvers = {
 
     Mutation: {
 
-        addUser: async (_, args, /*{ username, email, password }*/) => {
+        addUser: async (_, args) => {
 
             try {
                 const user = await User.create(args);
@@ -57,7 +57,7 @@ const resolvers = {
                 });
             }
         },
-        login: async (_, args, /*{ email, password }*/) => {
+        login: async (_, args) => {
             try {
                 const user = await User.findOne({ email: args.email, });
 

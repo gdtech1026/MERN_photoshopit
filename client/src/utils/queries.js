@@ -19,7 +19,7 @@ query me {
         description
         imagelink
         date
-        comment {
+        comments {
           editPhoto
           user
           date
@@ -71,7 +71,7 @@ query getCmment {
         description
         imagelink
         date
-        comment {
+        comments {
           editPhoto
           user
           date

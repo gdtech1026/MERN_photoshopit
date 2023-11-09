@@ -1,10 +1,6 @@
 
 import { gql } from '@apollo/client';
 
-// Must delete later 
-
-// Send USER_LOGIN to loginform component
-
 export const LOGIN_USER = gql`
 mutation login($email: String!, $password: String!) {
     login(email: $email, password: $password) {
@@ -33,10 +29,6 @@ mutation login($email: String!, $password: String!) {
   }
 }
 `;
-
-// Must delete later 
-
-// Send ADD_USER to SignUpform component
 
 export const ADD_USER = gql`
 mutation addUser($username: String!, $email: String!, $password: String!) {
@@ -69,25 +61,25 @@ mutation addUser($username: String!, $email: String!, $password: String!) {
 
 export const ADD_PHOTO = gql`
 
-mutation addPhoto($userId: ID!, $photo: PhotoInput!) {
-    addPhoto(userId: $userId, photo: $photo) {
-      _id
-      username
-      email
-      password
+mutation addPhoto($photo: PhotoInput!) {
+    addPhoto(photos: $photo) {
+      // _id
+      // username
+      // email
+      // password
       photos {
         title
         photoId
         description
         imagelink
         date
-        comments {
-          editPhoto
-          user
-          date
-          text
-          likes 
-          dislikes
+        // comments {
+        //   editPhoto
+        //   user
+        //   date
+        //   text
+        //   likes 
+        //   dislikes
         }
       }
     }
@@ -96,7 +88,7 @@ mutation addPhoto($userId: ID!, $photo: PhotoInput!) {
 
 export const REMOVE_PHOTO = gql`
 mutation removePhoto($photo: String!) {
-  removePhoto(photo: $photo) {
+  removePhoto(photos: $photo) {
     _id
     username
     email
@@ -124,7 +116,7 @@ mutation removePhoto($photo: String!) {
 export const ADD_COMMENT = gql`
 
 mutation addComment($userId: ID!, $comment: commentInput!) {
-  addComment(userId: $userId, comment: $comment) {
+  addComment(userId: $userId, comments: $comment) {
       _id
       username
       email
