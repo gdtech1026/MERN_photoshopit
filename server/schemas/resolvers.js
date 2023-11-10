@@ -69,6 +69,26 @@ const resolvers = {
         addPhoto: async (parent, args, photoOwner) => {
             console.log(photoOwner);
             if (photoOwner) {
+        // addPhoto: async (parent, { userId, photo }, context) => {
+        //     if (context.user) {
+        //         return await User.findOneAndUpdate(
+        //             {
+        //                 _id: userId
+        //             },
+        //             {
+        //                 $addToSet: { photos: photo },
+        //             },
+        //             {
+        //                 new: true,
+        //                 runValidators: true,
+        //             }
+        //         )
+        //             .catch((err) => {
+        //                 console.log(err);
+        //             })
+        //     }
+        //     throw AuthenticationError;
+        // },
 
                 const photo = await Photo.create(
                     { args, photoOwner });

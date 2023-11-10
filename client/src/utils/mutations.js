@@ -63,6 +63,8 @@ export const ADD_PHOTO = gql`
 
 mutation addPhoto($photo: PhotoInput!) {
     addPhoto(photos: $photo) {
+# mutation addPhoto($userId: ID!, $photoLink: String!, $deleteHash: String!) {
+#    addPhoto(userId: $userId, photoLink: $photoLink, deleteHash: $deleteHash) {
       _id
       username
       email
@@ -71,7 +73,8 @@ mutation addPhoto($photo: PhotoInput!) {
         title
         photoId
         description
-        imagelink
+        photoLink
+        deleteHash
         date
         comments {
           editPhoto
