@@ -26,6 +26,7 @@ const AppNavbar = () => {
                             {/* if user is logged in show added photos and logout */}
                             {Auth.loggedIn() ? (
                                 <>
+
                                     <Nav.Link as={Link} to='/saved'>
                                         See Photos
                                     </Nav.Link>
