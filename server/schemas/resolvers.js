@@ -66,16 +66,15 @@ const resolvers = {
             }
         },
 
-        addPhoto: async (parent, args, context) => {
-            console.log(context.user);
-            if (context.user) {
-
+        addPhoto: async (parent, args, photoOwner) => {
+            console.log(photoOwner);
+            if (photoOwner) {
 
                 const photo = await Photo.create(
-                    { args, context });
+                    { args, photoOwner });
 
                 await User.findOneAndUpdate(
-                    { username: args.username },
+                    { username: photoOwner },
                     { $addToSet: { photos: args._id } }
                 );
 
@@ -84,12 +83,12 @@ const resolvers = {
             throw AuthenticationError;
         },
 
-        addComment: async ({ photoId, comment }, context) => {
-            if (context.user) {
+        addComment: async (parent, { photoId, commentBody, username}) => {
+            if (username) {
                 return await Photo.findOneAndUpdate(
                     { _id: photoId },
                     {
-                        $addToSet: { comments: comment, context },
+                        $addToSet: { comments: commentBody, username },
                     },
                     {
                         new: true,
