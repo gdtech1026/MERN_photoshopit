@@ -3,7 +3,6 @@ import {
     ApolloClient, InMemoryCache, ApolloProvider,
     createHttpLink,
 } from '@apollo/client';
-// Bringing in the required import from 'react-router-dom'
 import { setContext } from '@apollo/client/link/context';
 import { Outlet } from 'react-router-dom';
 import Nav from './components/Navbar';

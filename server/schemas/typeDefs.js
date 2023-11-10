@@ -17,12 +17,14 @@ type User {
   type Query {
     me(userId:ID!): User
     comments: Comment
-    photos: Photo
+    photos(username: String): [Photo]
+    photo(photoId: ID!): Photo
   }
 
   type Photo {
     title: String!
-    photoId: String!
+    photoId: ID!
+    photoOwner: String
     description: String!
     imagelink: String!
     date: String!
@@ -30,13 +32,13 @@ type User {
   }
 
   type Comment {
-    editPhoto: String
-    user: String!
-    date: String!
-    text: String!
+    imageLink: String
+    username: String!
+    createdAt: String!
+    commentBody: String!
     likes: Int!
     dislikes: Int!
-    commentId: String!
+    commentId: ID!
   }
 
   input userInput {
@@ -58,9 +60,9 @@ type User {
 
     addUser(username: String!, email: String!, password: String!): Auth
 
-    addPhoto(photo: photoInput!): User
+    addPhoto(photo: photoInput!): Photo
 
-    removePhoto(photoId: ID!): User
+    removePhoto(photoId: ID!): Photo
 
     addComment(photoId: ID!, comment: String!): Photo
 
