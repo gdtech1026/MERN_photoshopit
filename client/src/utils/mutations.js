@@ -63,23 +63,23 @@ export const ADD_PHOTO = gql`
 
 mutation addPhoto($photo: PhotoInput!) {
     addPhoto(photos: $photo) {
-      // _id
-      // username
-      // email
-      // password
+      _id
+      username
+      email
+      password
       photos {
         title
         photoId
         description
         imagelink
         date
-        // comments {
-        //   editPhoto
-        //   user
-        //   date
-        //   text
-        //   likes 
-        //   dislikes
+        comments {
+          editPhoto
+          user
+          date
+          text
+          likes 
+          dislikes
         }
       }
     }

@@ -1,5 +1,5 @@
 const { GraphQLError } = require("graphql");
-const { Photo, User } = require('../models');
+const { Comment, Photo, User } = require('../models');
 
 const { signToken, AuthenticationError } = require('../utils/jwt');
 
@@ -10,27 +10,15 @@ const resolvers = {
                 const params = _id ? { _id } : {};
                 return User.find(params);
             }
-            // comments: async (context, { _id }) => {
-            //     if (context.user) {
-            //         return await 
-            //     }
-            //     // schools: async () => {
-            //     // return await School.find({}).populate('classes').populate({
-            //     //     path: 'classes',
-            //     //     populate: 'professor'
-            //     //   });
-            // }
-            // photos: async (context, { userId }) => {
-            //     if (context.user) {
-            //         return await Photo.find({}).populate('comments').populate({
-            //             path: 'comments',
-            //             populate: ''
-            //         })
-            //     }
-            // }
-
-
         },
+            photos: async (parent, { username }) => {
+            const params = username ? { username } : {};
+            return Photo.find({ params }).sort({ createdAt: -1 });
+        },
+        photo: async (parent, { photoId }) => {
+            return Photo.findOne({ _id: photoId });
+        }
+
     },
 
     Mutation: {
@@ -78,34 +66,20 @@ const resolvers = {
             }
         },
 
-        addPhoto: async ({ photo }, context) => {
+        addPhoto: async (parent, args, context) => {
+            console.log(context.user);
             if (context.user) {
-                return await User.findOneAndUpdate(
-                    {
-                        _id: context.user._id
-                    },
-                    {
-                        $addToSet: { photos: photo },
-                    },
-                    {
-                        new: true,
-                        runValidators: true,
-                    }
-                )
-                    .catch((err) => {
-                        console.log(err);
-                    })
-            }
-            throw AuthenticationError;
-        },
 
-        removePhoto: async ({ photo }, context) => {
-            if (context.user) {
-                return User.findOneAndUpdate(
-                    { _id: context.user._id },
-                    { $pull: { photos: photo } },
-                    { new: true }
+
+                const photo = await Photo.create(
+                    { args, context });
+
+                await User.findOneAndUpdate(
+                    { username: args.username },
+                    { $addToSet: { photos: args._id } }
                 );
+
+                return photo;
             }
             throw AuthenticationError;
         },
@@ -113,11 +87,9 @@ const resolvers = {
         addComment: async ({ photoId, comment }, context) => {
             if (context.user) {
                 return await Photo.findOneAndUpdate(
+                    { _id: photoId },
                     {
-                        _id: photoId
-                    },
-                    {
-                        $addToSet: { comments: comment },
+                        $addToSet: { comments: comment, context },
                     },
                     {
                         new: true,
@@ -132,12 +104,20 @@ const resolvers = {
 
         },
 
+        removePhoto: async ({parent, photoId }, context) => {
+            if (context.user) {
+                return Photo.findOneAndDelete(
+                    { _id: photoId });
+            }
+            throw AuthenticationError;
+        },
 
-        removeComment: async ({ comment }, context) => {
+
+        removeComment: async (parent, { photoId }, context) => {
             if (context.user) {
                 return Photo.findOneAndUpdate(
-                    { photoId: context.photo._id },
-                    { $pull: { comments: comment } },
+                    { _id: photoId },
+                    { $pull: { comments: { _id: commentId } } },
                     { new: true }
                 );
             }
