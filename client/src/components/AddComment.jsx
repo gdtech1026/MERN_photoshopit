@@ -6,7 +6,7 @@ import { ADD_COMMENT } from '../../utils/mutations';
 
 import Auth from '../../utils/auth';
 
-const CommentForm = ({ photoId }) => {
+const CommentForm = ({ userId }) => {
     const [commentText, setCommentText] = useState('');
     const [characterCount, setCharacterCount] = useState(0);
 
@@ -18,11 +18,8 @@ const CommentForm = ({ photoId }) => {
         try {
             const { data } = await addComment({
                 variables: {
-                    editPhoto,
-                    user,
-                    commentText,
-                    likes,
-                    dislikes,
+                    userId,
+                    comment,
                 },
             });
 
@@ -43,7 +40,7 @@ const CommentForm = ({ photoId }) => {
 
     return (
         <div>
-            <h4>What are your thoughts on this thought?</h4>
+            <h4>What are your thoughts on this photo?</h4>
 
             {Auth.loggedIn() ? (
                 <>

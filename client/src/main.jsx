@@ -6,7 +6,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 import App from './App';
 import Error from './pages/Error';
-// import Post from './pages/Post';
+import Post from './pages/Post';
 import Search from './pages/Search';
 import Comment from './pages/Comment';
 
@@ -20,10 +20,10 @@ const router = createBrowserRouter([
                 index: true,
                 element: <Search />,
             },
-            // {
-            //     path: '/Post',
-            //     element: <Post />,
-            // },
+            {
+                path: '/Post',
+                element: <Post />,
+            },
             {
                 path: '/Comment',
                 element: <Comment />,

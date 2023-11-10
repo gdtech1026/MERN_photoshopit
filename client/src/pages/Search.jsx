@@ -10,7 +10,7 @@ import {
 
 import Auth from '../utils/auth';
 import { searchPhoto } from '../utils/API';
-import { useMutation } from '@apollo/client';
+import { useQuery } from '@apollo/client';
 import { GET_PHOTO } from '../utils/queries';
 import { savePhotoIds, getSavedPhotoIds } from '../utils/localStorage';
 
