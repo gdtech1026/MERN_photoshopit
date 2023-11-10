@@ -38,6 +38,13 @@ const photoSchema = new Schema({
     comments: [commentSchema],
 });
 
+// Photo.create({
+//     title: 'title',
+//     photoOwner:'',
+//     photoId:'',
+
+// })
+
 const Photo = model('Photo', photoSchema);
 
 module.exports = Photo;
