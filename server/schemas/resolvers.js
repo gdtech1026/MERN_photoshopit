@@ -78,11 +78,11 @@ const resolvers = {
             }
         },
 
-        addPhoto: async ({ photo }, context) => {
+        addPhoto: async (parent, { userId, photo }, context) => {
             if (context.user) {
                 return await User.findOneAndUpdate(
                     {
-                        _id: context.user._id
+                        _id: userId
                     },
                     {
                         $addToSet: { photos: photo },
