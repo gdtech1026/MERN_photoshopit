@@ -24,6 +24,7 @@ type User {
   type Photo {
     title: String!
     photoId: ID!
+    photoOwner: String
     description: String!
     imagelink: String!
     date: String!
@@ -31,13 +32,13 @@ type User {
   }
 
   type Comment {
-    editPhoto: String
-    user: String!
-    date: String!
-    text: String!
+    imageLink: String
+    username: String!
+    createdAt: String!
+    commentBody: String!
     likes: Int!
     dislikes: Int!
-    commentId: String!
+    commentId: ID!
   }
 
   input userInput {
