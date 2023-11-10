@@ -14,7 +14,11 @@ const photoSchema = new Schema({
         type: String,
         required: true,
     },
-    imagelink: {
+    photoLink: {
+        type: String,
+        required: true,
+    },
+    deleteHash: {
         type: String,
         required: true,
     },

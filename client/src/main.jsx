@@ -8,7 +8,7 @@ import App from './App';
 import Error from './pages/Error';
 // import Post from './pages/Post';
 import Search from './pages/Search';
-// import Comment from './pages/Comment';
+import Comment from './pages/Comment';
 
 const router = createBrowserRouter([
     {
@@ -24,10 +24,10 @@ const router = createBrowserRouter([
             //     path: '/Post',
             //     element: <Post />,
             // },
-            // {
-            //     path: '/Comment',
-            //     element: <Comment />,
-            // }
+            {
+                path: '/Comment',
+                element: <Comment />,
+            }
         ],
     },
 ]);
