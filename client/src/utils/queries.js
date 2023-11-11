@@ -1,14 +1,9 @@
 
-
 import { gql } from '@apollo/client';
 
-// Must delete later 
-
-// Send GET_ME to yourPosts Page 
-
 export const GET_ME = gql`
-query me {
-  me {
+query me($username: String!) {
+  me($username: String!) {
     _id
     username
     email
@@ -21,27 +16,31 @@ query me {
       imageLink
       deleteHash
       date
-      comments {
-        editPhoto
-        username
-        createdAt
-        commentBody
-        likes 
-        dislikes
       }
     }
   }
 }
 `;
 
-export const GET_PHOTO = gql`
-query getPhoto {
+export const GET_PHOTOS = gql`
+query getPhotos {
   photos {
-    _id
-    username
-    email
-    password
-    photos {
+      title
+      photoId
+      photoOwner
+      description
+      imageLink
+      deleteHash
+      date
+      }
+    }
+  }
+}
+`;
+
+export const SINGLE_PHOTO = gql`
+  query getSinglePhoto ($photoId: ID!) {
+    photo(photoId: $photoId) {
       title
       photoId
       photoOwner
@@ -59,31 +58,19 @@ query getPhoto {
       }
     }
   }
-}
-`;
 
-export const GET_COMMENT = gql`
-query getCmment {
+`
+
+
+export const GET_COMMENTS = gql`
+query getComments {
   comments {
-    _id
-    username
-    email
-    password
-    photos {
-      title
-      photoId
-      photoOwner
-      description
-      imageLink
-      deleteHash
-      date
-      comments {
-        editPhoto
-        username
-        createdAt
-        commentBody
-        likes 
-        dislikes
+      editPhoto
+      username
+      createdAt
+      commentBody
+      likes 
+      dislikes
       }
     }
   }
