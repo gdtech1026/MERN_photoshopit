@@ -20,7 +20,9 @@ const CommentForm = ({ photoId }) => {
             const { data } = await addComment({
                 variables: {
                     photoId,
-                    comment
+                    commentBody,
+                    createdAt,
+                    username: Auth.getUser().data.username,
                 },
             });
 

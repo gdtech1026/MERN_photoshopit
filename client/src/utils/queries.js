@@ -14,18 +14,20 @@ query me {
     email
     password
     photos {
-        title
-        photoId
-        description
-        imagelink
-        date
-        comments {
-          editPhoto
-          user
-          date
-          text
-          likes 
-          dislikes
+      title
+      photoId
+      photoOwner
+      description
+      imageLink
+      deleteHash
+      date
+      comments {
+        editPhoto
+        username
+        createdAt
+        commentBody
+        likes 
+        dislikes
       }
     }
   }
@@ -40,18 +42,20 @@ query getPhoto {
     email
     password
     photos {
-        title
-        photoId
-        description
-        imagelink
-        date
-        comments {
-          editPhoto
-          user
-          date
-          text
-          likes 
-          dislikes
+      title
+      photoId
+      photoOwner
+      description
+      imageLink
+      deleteHash
+      date
+      comments {
+        editPhoto
+        username
+        createdAt
+        commentBody
+        likes 
+        dislikes
       }
     }
   }
@@ -66,18 +70,20 @@ query getCmment {
     email
     password
     photos {
-        title
-        photoId
-        description
-        imagelink
-        date
-        comments {
-          editPhoto
-          user
-          date
-          text
-          likes 
-          dislikes
+      title
+      photoId
+      photoOwner
+      description
+      imageLink
+      deleteHash
+      date
+      comments {
+        editPhoto
+        username
+        createdAt
+        commentBody
+        likes 
+        dislikes
       }
     }
   }

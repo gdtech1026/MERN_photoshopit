@@ -67,7 +67,6 @@ const resolvers = {
         },
 
         addPhoto: async (parent, args, photoOwner) => {
-            console.log(photoOwner);
             if (photoOwner) {
         // addPhoto: async (parent, { userId, photo }, context) => {
         //     if (context.user) {
