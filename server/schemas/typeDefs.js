@@ -3,68 +3,59 @@
 const typeDefs = `
 
 type User {
-    _id: ID!
-    username: String!
-    email: String!
-    password: String!
-    photos: [Photo]
+    _id: ID
+    username: String
+    email: String
+    password: String
+    photos: [Photo]!
+  }
+
+  type Photo {
+    photoId: ID
+    title: String
+    photoOwner: String
+    description: String
+    imagelink: String
+    date: String
+    comments: [Comment]!
+  }
+
+  type Comment {
+    commentId: ID
+    imageLink: String
+    username: String
+    createdAt: String
+    commentBody: String
+    likes: Int
+    dislikes: Int
   }
 
   type Auth {
     token: String!
+    user: User
   }
 
   type Query {
     me(userId:ID!): User
-    comments: Comment
+    users: [User]
+    comments: [Comment]
     photos(username: String): [Photo]
     photo(photoId: ID!): Photo
   }
 
-  type Photo {
-    title: String!
-    photoId: ID!
-    photoOwner: String
-    description: String!
-    imagelink: String!
-    date: String!
-    comments: [Comment]
-  }
-
-  type Comment {
-    imageLink: String
-    username: String!
-    createdAt: String!
-    commentBody: String!
-    likes: Int!
-    dislikes: Int!
-    commentId: ID!
-  }
-
-  input userInput {
-    _id: ID
-    username: String!
-    email: String!
-    password: String!
-    photos: [String]
-  }
-
-  input photoInput {
-    title: String!
-    description: String!
-    imagelink: String!
-  }
 
   type Mutation {
-    login(email: String!, password: String!): Auth
-
     addUser(username: String!, email: String!, password: String!): Auth
 
-    addPhoto(photo: photoInput!): Photo
+    login(email: String!, password: String!): Auth
+
+    addPhoto(description: String!, photoOwner: String!): Photo
 
     removePhoto(photoId: ID!): Photo
 
-    addComment(photoId: ID!, comment: String!): Photo
+    addComment(photoId: ID!, commentBody: String!,
+    username: String!
+    ): Photo
 
     removeComment(photoId: ID!, commentId: ID!): Photo
   }
@@ -72,3 +63,17 @@ type User {
 `
 
 module.exports = typeDefs;
+
+// input userInput {
+//   _id: ID
+//   username: String!
+//   email: String!
+//   password: String!
+//   photos: [String]
+// }
+
+// input photoInput {
+//   title: String!
+//   description: String!
+//   imagelink: String!
+// }

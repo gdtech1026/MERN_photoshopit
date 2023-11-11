@@ -2,18 +2,18 @@ const { Schema, Types } = require('mongoose');
 
 const commentSchema = new Schema(
   {
+    commentBody: {
+      type: String,
+      required: true,
+      minlength: 1,
+      maxLength: 280,
+    },
     commentId: {
       type: Schema.Types.ObjectId,
       default: () => new Types.ObjectId(),
     },
     imageLink: {
       type: String,
-    },
-    commentBody: {
-      type: String,
-      required: true,
-      minlength: 1,
-      maxLength: 280,
     },
     username: {
       type: String,
@@ -24,6 +24,14 @@ const commentSchema = new Schema(
       default: Date.now,
       get: (timestamp) => new Date(timestamp).toLocaleString(),
     },
+    // likes: {
+    //   type: Int,
+    //   required: true,
+    // },
+    // dislikes: {
+    //   type: Int,
+    //   required: true,
+    // }
   },
   {
     toJSON: {

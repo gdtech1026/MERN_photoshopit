@@ -22,7 +22,7 @@ query me($username: String!) {
 }
 `;
 
-export const GET_PHOTOS = gql`
+export const GET_PHOTO = gql`
 query getPhotos {
   photos {
       title

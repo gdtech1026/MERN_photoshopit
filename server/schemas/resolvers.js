@@ -5,13 +5,13 @@ const { signToken, AuthenticationError } = require('../utils/jwt');
 
 const resolvers = {
     Query: {
-        me: async (context, { _id }) => {
-            if (context.user) {
-                const params = _id ? { _id } : {};
-                return User.find(params);
-            }
+        me: async (parent, { username }) => {
+            return User.findOne({ username }).populate('photos');
         },
-            photos: async (parent, { username }) => {
+        users: async () => {
+            return User.find().populate('photos');
+        },
+        photos: async (parent, { username }) => {
             const params = username ? { username } : {};
             return Photo.find({ params }).sort({ createdAt: -1 });
         },
@@ -68,26 +68,26 @@ const resolvers = {
 
         addPhoto: async (parent, args, photoOwner) => {
             if (photoOwner) {
-        // addPhoto: async (parent, { userId, photo }, context) => {
-        //     if (context.user) {
-        //         return await User.findOneAndUpdate(
-        //             {
-        //                 _id: userId
-        //             },
-        //             {
-        //                 $addToSet: { photos: photo },
-        //             },
-        //             {
-        //                 new: true,
-        //                 runValidators: true,
-        //             }
-        //         )
-        //             .catch((err) => {
-        //                 console.log(err);
-        //             })
-        //     }
-        //     throw AuthenticationError;
-        // },
+                // addPhoto: async (parent, { userId, photo }, context) => {
+                //     if (context.user) {
+                //         return await User.findOneAndUpdate(
+                //             {
+                //                 _id: userId
+                //             },
+                //             {
+                //                 $addToSet: { photos: photo },
+                //             },
+                //             {
+                //                 new: true,
+                //                 runValidators: true,
+                //             }
+                //         )
+                //             .catch((err) => {
+                //                 console.log(err);
+                //             })
+                //     }
+                //     throw AuthenticationError;
+                // },
 
                 const photo = await Photo.create(
                     { args, photoOwner });
@@ -102,7 +102,7 @@ const resolvers = {
             throw AuthenticationError;
         },
 
-        addComment: async (parent, { photoId, commentBody, username}) => {
+        addComment: async (parent, { photoId, commentBody, username }) => {
             if (username) {
                 return await Photo.findOneAndUpdate(
                     { _id: photoId },
@@ -122,7 +122,7 @@ const resolvers = {
 
         },
 
-        removePhoto: async ({parent, photoId }, context) => {
+        removePhoto: async ({ parent, photoId }, context) => {
             if (context.user) {
                 return Photo.findOneAndDelete(
                     { _id: photoId });
@@ -131,8 +131,8 @@ const resolvers = {
         },
 
 
-        removeComment: async (parent, { photoId }, context) => {
-            if (context.user) {
+        removeComment: async (parent, { photoId, commentId }) => {
+            if (commentId) {
                 return Photo.findOneAndUpdate(
                     { _id: photoId },
                     { $pull: { comments: { _id: commentId } } },

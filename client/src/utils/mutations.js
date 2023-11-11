@@ -44,12 +44,7 @@ addPhoto(userId: $userId,
    photoLink: $photoLink,
    description: $description,
    date: $date
-    deleteHash: $deleteHash) {
-      _id
-      username
-      email
-      password
-      photos {
+   deleteHash: $deleteHash) {
         title
         photoId
         photoOwner

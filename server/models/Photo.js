@@ -4,11 +4,19 @@ const commentSchema = require('./Comment');
 const photoSchema = new Schema({
     title: {
         type: String,
-        required: true,
+        required: 'You need to leave a title!',
+        minlength: 1,
+        maxlength: 50,
     },
     photoOwner: {
         type: String,
         required: true,
+        trim: true,
+    },
+    date: {
+        type: Date,
+        default: Date.now,
+        get: (timestamp) => dateFormat(timestamp),
     },
     photoId: {
         type: Types.ObjectId,
@@ -17,11 +25,11 @@ const photoSchema = new Schema({
     description: {
         type: String,
         required: 'Please leave a description for your photo...',
-        required: true,
         minlength: 1,
         maxlength: 280,
+        trim: true,
     },
-    photoLink: {
+    imageLink: {
         type: String,
         required: true,
     },
@@ -29,21 +37,8 @@ const photoSchema = new Schema({
         type: String,
         required: true,
     },
-    date: {
-        type: String,
-        required: true,
-        default: Date.now,
-        get: (timestamp) => dateFormat(timestamp),
-    },
     comments: [commentSchema],
 });
-
-// Photo.create({
-//     title: 'title',
-//     photoOwner:'',
-//     photoId:'',
-
-// })
 
 const Photo = model('Photo', photoSchema);
 
