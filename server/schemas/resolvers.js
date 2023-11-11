@@ -13,7 +13,7 @@ const resolvers = {
         },
         photos: async (parent, { username }) => {
             const params = username ? { username } : {};
-            return Photo.find({ params }).sort({ createdAt: -1 });
+            return Photo.find({  }).sort({ createdAt: -1 });
         },
         photo: async (parent, { photoId }) => {
             return Photo.findOne({ _id: photoId });
@@ -66,40 +66,39 @@ const resolvers = {
             }
         },
 
-        addPhoto: async (parent, args, photoOwner) => {
-            if (photoOwner) {
-                // addPhoto: async (parent, { userId, photo }, context) => {
-                //     if (context.user) {
-                //         return await User.findOneAndUpdate(
-                //             {
-                //                 _id: userId
-                //             },
-                //             {
-                //                 $addToSet: { photos: photo },
-                //             },
-                //             {
-                //                 new: true,
-                //                 runValidators: true,
-                //             }
-                //         )
-                //             .catch((err) => {
-                //                 console.log(err);
-                //             })
-                //     }
-                //     throw AuthenticationError;
-                // },
+        addPhoto: async (parent, { description, photoOwner, title, imageLink }) => {
+            // addPhoto: async (parent, { userId, photo }, context) => {
+            //     if (context.user) {
+            //         return await User.findOneAndUpdate(
+            //             {
+            //                 _id: userId
+            //             },
+            //             {
+            //                 $addToSet: { photos: photo },
+            //             },
+            //             {
+            //                 new: true,
+            //                 runValidators: true,
+            //             }
+            //         )
+            //             .catch((err) => {
+            //                 console.log(err);
+            //             })
+            //     }
+            //     throw AuthenticationError;
+            // },
 
-                const photo = await Photo.create(
-                    { args, photoOwner });
+            const photo = await Photo.create(
+                {
+                    description, photoOwner, title, imageLink
+                });
 
-                await User.findOneAndUpdate(
-                    { username: photoOwner },
-                    { $addToSet: { photos: args._id } }
-                );
+            await User.findOneAndUpdate(
+                { username: photoOwner },
+                { $addToSet: { photos: photo.photoId } }
+            );
 
-                return photo;
-            }
-            throw AuthenticationError;
+            return photo;
         },
 
         addComment: async (parent, { photoId, commentBody, username }) => {

@@ -4,9 +4,10 @@ const commentSchema = require('./Comment');
 const photoSchema = new Schema({
     title: {
         type: String,
-        required: 'You need to leave a title!',
+        // required: 'You need to leave a title!',
         minlength: 1,
         maxlength: 50,
+        trim: true,
     },
     photoOwner: {
         type: String,
@@ -31,11 +32,11 @@ const photoSchema = new Schema({
     },
     imageLink: {
         type: String,
-        required: true,
+        // required: true,
     },
     deleteHash: {
         type: String,
-        required: true,
+        // required: true,
     },
     comments: [commentSchema],
 });

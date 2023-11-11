@@ -15,7 +15,7 @@ type User {
     title: String
     photoOwner: String
     description: String
-    imagelink: String
+    imageLink: String
     date: String
     comments: [Comment]!
   }
@@ -36,8 +36,8 @@ type User {
   }
 
   type Query {
-    me(userId:ID!): User
     users: [User]
+    me(username: String!): User
     comments: [Comment]
     photos(username: String): [Photo]
     photo(photoId: ID!): Photo
@@ -49,13 +49,13 @@ type User {
 
     login(email: String!, password: String!): Auth
 
-    addPhoto(description: String!, photoOwner: String!): Photo
-
-    removePhoto(photoId: ID!): Photo
+    addPhoto(description: String!, photoOwner: String!, title: String!, imageLink: String!): Photo
 
     addComment(photoId: ID!, commentBody: String!,
     username: String!
     ): Photo
+
+    removePhoto(photoId: ID!): Photo
 
     removeComment(photoId: ID!, commentId: ID!): Photo
   }

@@ -35,11 +35,10 @@ export const ADD_PHOTO = gql`
 #   addPhoto(photos: $photo) {
 
 mutation addPhoto(
-  $userId: ID!,
-  $photoLink: String!,
+  $photoLink: String,
   $description: String!,
-  $date: String!,
-  $deleteHash: String!) {
+  $date: String,
+  $deleteHash: String) {
 addPhoto(userId: $userId,
    photoLink: $photoLink,
    description: $description,
