@@ -11,7 +11,7 @@ type User {
   }
 
   type Photo {
-    photoId: ID
+    _id: ID
     title: String
     photoOwner: String
     description: String
@@ -21,7 +21,7 @@ type User {
   }
 
   type Comment {
-    commentId: ID
+    _id: ID
     imageLink: String
     username: String
     createdAt: String
@@ -31,13 +31,13 @@ type User {
   }
 
   type Auth {
-    token: String!
+    token: ID!
     user: User
   }
 
   type Query {
     users: [User]
-    me(username: String!): User
+    user(username: String!): User
     comments: [Comment]
     photos(username: String): [Photo]
     photo(photoId: ID!): Photo
@@ -63,17 +63,3 @@ type User {
 `
 
 module.exports = typeDefs;
-
-// input userInput {
-//   _id: ID
-//   username: String!
-//   email: String!
-//   password: String!
-//   photos: [String]
-// }
-
-// input photoInput {
-//   title: String!
-//   description: String!
-//   imagelink: String!
-// }

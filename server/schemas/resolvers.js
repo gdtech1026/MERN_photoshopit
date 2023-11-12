@@ -5,7 +5,7 @@ const { signToken, AuthenticationError } = require('../utils/jwt');
 
 const resolvers = {
     Query: {
-        me: async (parent, { username }) => {
+        user: async (parent, { username }) => {
             return User.findOne({ username }).populate('photos');
         },
         users: async () => {
@@ -13,7 +13,7 @@ const resolvers = {
         },
         photos: async (parent, { username }) => {
             const params = username ? { username } : {};
-            return Photo.find({  }).sort({ createdAt: -1 });
+            return Photo.find({}).sort({ createdAt: -1 });
         },
         photo: async (parent, { photoId }) => {
             return Photo.findOne({ _id: photoId });
@@ -22,71 +22,31 @@ const resolvers = {
     },
 
     Mutation: {
-
-        addUser: async (_, args) => {
-
-            try {
-                const user = await User.create(args);
-                const token = signToken({
-                    _id: user._id,
-                    email: user.email,
-                    username: user.username,
-                    password: user.password,
-                });
-
-                return { token };
-
-
-            } catch (error) {
-                return new GraphQLError("Invalid Sign Up" + error, {
-                    extensions: {
-                        code: "BAD_USER_INPUT",
-                    },
-                });
-            }
+        addUser: async (parent, { username, email, password }) => {
+            const user = await User.create({ username, email, password });
+            const token = signToken(user);
+            return { token, user };
         },
-        login: async (_, args) => {
-            try {
-                const user = await User.findOne({ email: args.email, });
 
-                const correctPw = await user.isCorrectPassword(args.password);
-
-                if (correctPw) {
-                    const token = signToken({
-                        _id: user._id,
-                        email: user.email,
-                        username: user.username,
-                        password: user.password,
-                    });
-
-                    return { token };
-                }
-            } catch (error) {
-                return error;
+        login: async (parent, { email, password }) => {
+            const user = await User.findOne({ email });
+      
+            if (!user) {
+              throw AuthenticationError;
             }
+      
+            const correctPw = await user.isCorrectPassword(password);
+      
+            if (!correctPw) {
+              throw AuthenticationError;
+            }
+      
+            const token = signToken(user);
+      
+            return { token, user };
         },
 
         addPhoto: async (parent, { description, photoOwner, title, imageLink }) => {
-            // addPhoto: async (parent, { userId, photo }, context) => {
-            //     if (context.user) {
-            //         return await User.findOneAndUpdate(
-            //             {
-            //                 _id: userId
-            //             },
-            //             {
-            //                 $addToSet: { photos: photo },
-            //             },
-            //             {
-            //                 new: true,
-            //                 runValidators: true,
-            //             }
-            //         )
-            //             .catch((err) => {
-            //                 console.log(err);
-            //             })
-            //     }
-            //     throw AuthenticationError;
-            // },
 
             const photo = await Photo.create(
                 {
@@ -95,7 +55,7 @@ const resolvers = {
 
             await User.findOneAndUpdate(
                 { username: photoOwner },
-                { $addToSet: { photos: photo.photoId } }
+                { $addToSet: { photos: photo._id } }
             );
 
             return photo;

@@ -3,12 +3,13 @@ import { gql } from '@apollo/client';
 
 export const GET_ME = gql`
 query me($username: String!) {
-  me($username: String!) {
+  me($username: $username) {
     _id
     username
     email
     password
     photos {
+      _id
       title
       photoId
       photoOwner
@@ -25,6 +26,7 @@ query me($username: String!) {
 export const GET_PHOTO = gql`
 query getPhotos {
   photos {
+      _id
       title
       photoId
       photoOwner
@@ -34,13 +36,12 @@ query getPhotos {
       date
       }
     }
-  }
-}
 `;
 
 export const SINGLE_PHOTO = gql`
   query getSinglePhoto ($photoId: ID!) {
     photo(photoId: $photoId) {
+      _id
       title
       photoId
       photoOwner
@@ -49,6 +50,7 @@ export const SINGLE_PHOTO = gql`
       deleteHash
       date
       comments {
+        _id
         editPhoto
         username
         createdAt
@@ -65,6 +67,7 @@ export const SINGLE_PHOTO = gql`
 export const GET_COMMENTS = gql`
 query getComments {
   comments {
+      _id
       editPhoto
       username
       createdAt
@@ -73,6 +76,4 @@ query getComments {
       dislikes
       }
     }
-  }
-}
 `;

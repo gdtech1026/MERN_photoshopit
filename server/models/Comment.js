@@ -8,11 +8,11 @@ const commentSchema = new Schema(
       minlength: 1,
       maxLength: 280,
     },
-    commentId: {
-      type: Schema.Types.ObjectId,
-      default: () => new Types.ObjectId(),
-      ref: "Photo",
-    },
+    // commentId: {
+    //   type: Schema.Types.ObjectId,
+    //   default: () => new Types.ObjectId(),
+    //   ref: "Photo",
+    // },
     imageLink: {
       type: String,
     },

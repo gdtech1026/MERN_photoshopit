@@ -20,11 +20,11 @@ const photoSchema = new Schema({
         default: Date.now,
         get: (timestamp) => dateFormat(timestamp),
     },
-    photoId: {
-        type: Types.ObjectId,
-        ref: "User",
-        required: true,
-    },
+    // photoId: {
+    //     type: Types.ObjectId,
+    //     ref: "User",
+    //     required: true,
+    // },
     description: {
         type: String,
         required: 'Please leave a description for your photo...',
