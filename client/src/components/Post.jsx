@@ -1,8 +1,6 @@
 import { useState } from 'react';
 import PostForm from './PostForm';
 
-import { photo } from ''
-
 function Post() {
     const [post, setPost] = useState([]);
 

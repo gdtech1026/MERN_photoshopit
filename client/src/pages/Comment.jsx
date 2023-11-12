@@ -2,11 +2,7 @@ import { useState } from "react";
 import { useMutation } from "@apollo/client";
 import { ADD_PHOTO } from "../utils/mutations";
 
-import CommentForm from '../components/AddComment'
-
-
-
-const UploadPhoto = ({userId}) => {
+const UploadPhoto = ({ userId }) => {
   const clientID = "17bc5b96a464d2f";
   const [photoLink, setPhotoLink] = useState("");
   const [deleteHash, setDeleteHash] = useState("");
@@ -17,7 +13,7 @@ const UploadPhoto = ({userId}) => {
     try {
       const formData = new FormData();
       formData.append("image", event.target.files[0]);
-  
+
       const response = await fetch("https://api.imgur.com/3/image", {
         method: "POST",
         headers: {
@@ -25,16 +21,16 @@ const UploadPhoto = ({userId}) => {
         },
         body: formData,
       });
-  console.log(response);
+      console.log(response);
       const photoData = await response.json();
-  
+
       if (data.success) {
         setPhotoLink(photoData.data.link);
         setDeleteHash(photoData.data.deletehash);
       } else {
         console.error("Failed to upload image.");
       }
-  
+
       const { data } = await addPhoto({
         variables: { userId, photoLink, deleteHash },
       });
