@@ -1,49 +1,47 @@
 const { Schema, model, Types } = require('mongoose');
 const commentSchema = require('./Comment');
+const User = require('./User');
 
 const photoSchema = new Schema({
     title: {
         type: String,
-        required: true,
+        required: 'You need to leave a title!',
+        minlength: 1,
+        maxlength: 50,
+        trim: true,
     },
     photoOwner: {
         type: String,
         required: true,
-    },
-    photoId: {
-        type: Types.ObjectId,
-        required: true,
-    },
-    description: {
-        type: String,
-        required: 'Please leave a description for your photo...',
-        required: true,
-        minlength: 1,
-        maxlength: 280,
-    },
-    photoLink: {
-        type: String,
-        required: true,
-    },
-    deleteHash: {
-        type: String,
-        required: true,
+        trim: true,
     },
     date: {
-        type: String,
-        required: true,
+        type: Date,
         default: Date.now,
         get: (timestamp) => dateFormat(timestamp),
     },
+    // photoId: {
+    //     type: Types.ObjectId,
+    //     ref: "User",
+    //     required: true,
+    // },
+    description: {
+        type: String,
+        required: 'Please leave a description for your photo...',
+        minlength: 1,
+        maxlength: 280,
+        trim: true,
+    },
+    imageLink: {
+        type: String,
+        // required: true,
+    },
+    deleteHash: {
+        type: String,
+        // required: true,
+    },
     comments: [commentSchema],
 });
-
-// Photo.create({
-//     title: 'title',
-//     photoOwner:'',
-//     photoId:'',
-
-// })
 
 const Photo = model('Photo', photoSchema);
 

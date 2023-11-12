@@ -2,18 +2,19 @@ const { Schema, Types } = require('mongoose');
 
 const commentSchema = new Schema(
   {
-    commentId: {
-      type: Schema.Types.ObjectId,
-      default: () => new Types.ObjectId(),
-    },
-    imageLink: {
-      type: String,
-    },
     commentBody: {
       type: String,
       required: true,
       minlength: 1,
       maxLength: 280,
+    },
+    // commentId: {
+    //   type: Schema.Types.ObjectId,
+    //   default: () => new Types.ObjectId(),
+    //   ref: "Photo",
+    // },
+    imageLink: {
+      type: String,
     },
     username: {
       type: String,
@@ -22,8 +23,16 @@ const commentSchema = new Schema(
     createdAt: {
       type: Date,
       default: Date.now,
-      get: (timestamp) => new Date(timestamp).toLocaleString(),
+      get: (timestamp) => new dateFormat(timestamp).toLocaleString(),
     },
+    // likes: {
+    //   type: Int,
+    //   required: true,
+    // },
+    // dislikes: {
+    //   type: Int,
+    //   required: true,
+    // }
   },
   {
     toJSON: {

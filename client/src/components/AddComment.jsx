@@ -6,9 +6,8 @@ import { ADD_COMMENT } from '../../utils/mutations';
 
 import Auth from '../../utils/auth';
 
-
 const CommentForm = ({ photoId }) => {
-    const [commentText, setCommentText] = useState('');
+    const [commentBody, setCommentBody] = useState('');
     const [characterCount, setCharacterCount] = useState(0);
 
     const [addComment, { error }] = useMutation(ADD_COMMENT);
@@ -20,11 +19,12 @@ const CommentForm = ({ photoId }) => {
             const { data } = await addComment({
                 variables: {
                     photoId,
-                    comment
+                    commentBody,
+                    username: Auth.getUser().data.username,
                 },
             });
 
-            setCommentText('');
+            setCommentBody('');
         } catch (err) {
             console.error(err);
         }
@@ -33,8 +33,8 @@ const CommentForm = ({ photoId }) => {
     const handleChange = (event) => {
         const { name, value } = event.target;
 
-        if (name === 'commentText' && value.length <= 280) {
-            setCommentText(value);
+        if (name === 'commentBody' && value.length <= 280) {
+            setCommentBody(value);
             setCharacterCount(value.length);
         }
     };
@@ -60,7 +60,7 @@ const CommentForm = ({ photoId }) => {
                             <textarea
                                 name="commentText"
                                 placeholder="Add your comment..."
-                                value={commentText}
+                                value={commentBody}
                                 className="form-input w-100"
                                 style={{ lineHeight: '1.5', resize: 'vertical' }}
                                 onChange={handleChange}

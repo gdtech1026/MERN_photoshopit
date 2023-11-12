@@ -10,21 +10,6 @@ mutation login($email: String!, $password: String!) {
       username
       email
       password
-      photos {
-        title
-        photoId
-        description
-        imagelink
-        date
-        comment {
-          editPhoto
-          user
-          date
-          text
-          likes 
-          dislikes
-      }
-      }
     }
   }
 }
@@ -39,21 +24,6 @@ mutation addUser($username: String!, $email: String!, $password: String!) {
       username
       email
       password
-      photos {
-        title
-        photoId
-        description
-        imagelink
-        date
-        comments {
-          editPhoto
-          user
-          date
-          text
-          likes 
-          dislikes
-      }
-      }
     }
   }
 }
@@ -61,28 +31,34 @@ mutation addUser($username: String!, $email: String!, $password: String!) {
 
 export const ADD_PHOTO = gql`
 
-mutation addPhoto($photo: PhotoInput!) {
-    addPhoto(photos: $photo) {
-# mutation addPhoto($userId: ID!, $photoLink: String!, $deleteHash: String!) {
-#    addPhoto(userId: $userId, photoLink: $photoLink, deleteHash: $deleteHash) {
-      _id
-      username
-      email
-      password
-      photos {
+# mutation addPhoto($photo: PhotoInput!) {
+#   addPhoto(photos: $photo) {
+
+mutation addPhoto(
+  $photoLink: String,
+  $description: String!,
+  $deleteHash: String) {
+addPhoto(
+   photoLink: $photoLink,
+   description: $description,
+   deleteHash: $deleteHash) {
+        _id
         title
         photoId
+        photoOwner
         description
-        photoLink
+        imageLink
         deleteHash
         date
         comments {
+          _id
           editPhoto
-          user
-          date
-          text
+          username
+          createdAt
+          commentBody
           likes 
           dislikes
+        }
         }
       }
     }
@@ -97,18 +73,20 @@ mutation removePhoto($photo: String!) {
     email
     password
     photos {
-        title
-        photoId
-        description
-        imagelink
-        date
-        comments {
-          editPhoto
-          user
-          date
-          text
-          likes 
-          dislikes
+      title
+      photoId
+      photoOwner
+      description
+      imageLink
+      deleteHash
+      date
+      comments {
+        editPhoto
+        username
+        createdAt
+        commentBody
+        likes 
+        dislikes
       }
     }
   }
@@ -117,30 +95,39 @@ mutation removePhoto($photo: String!) {
 
 
 export const ADD_COMMENT = gql`
-
-mutation addComment($userId: ID!, $comment: commentInput!) {
-  addComment(userId: $userId, comments: $comment) {
+mutation addComment(
+  $photoId: ID!
+  $commentBody: String!
+  $createdAt: String!
+  $likes: Int!
+  dislikes: Int!
+) {
+  addComment(
+    photoId: $photoId
+    commentBody: $commentBody
+    createdAt: $createdAt
+    likes: $likes
+    dislikes: $dislikes    
+  ) {
       _id
-      username
-      email
-      password
-      photos {
-        title
-        photoId
-        description
-        imagelink
-        date
-        comments {
-          editPhoto
-          user
-          date
-          text
-          likes 
-          dislikes
+      title
+      photoId
+      photoOwner
+      description
+      imageLink
+      deleteHash
+      date
+      comments {
+        _id
+        editPhoto
+        username
+        createdAt
+        commentBody
+        likes 
+        dislikes
         }
       }
     }
-  }
   `;
 
 
