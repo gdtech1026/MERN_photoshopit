@@ -4,7 +4,7 @@ import { useMutation } from '@apollo/client';
 
 import { ADD_COMMENT } from '../../utils/mutationsons';
 
-import Auth from '../../utils/authuth';
+import Auth from '../../utils/auth';
 
 
 const CommentForm = ({ photoId }) => {

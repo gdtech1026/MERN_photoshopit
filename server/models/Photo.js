@@ -1,10 +1,11 @@
 const { Schema, model, Types } = require('mongoose');
 const commentSchema = require('./Comment');
+const User = require('./User');
 
 const photoSchema = new Schema({
     title: {
         type: String,
-        // required: 'You need to leave a title!',
+        required: 'You need to leave a title!',
         minlength: 1,
         maxlength: 50,
         trim: true,
@@ -21,6 +22,7 @@ const photoSchema = new Schema({
     },
     photoId: {
         type: Types.ObjectId,
+        ref: "User",
         required: true,
     },
     description: {

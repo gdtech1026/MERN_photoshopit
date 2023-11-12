@@ -11,6 +11,7 @@ const commentSchema = new Schema(
     commentId: {
       type: Schema.Types.ObjectId,
       default: () => new Types.ObjectId(),
+      ref: "Photo",
     },
     imageLink: {
       type: String,

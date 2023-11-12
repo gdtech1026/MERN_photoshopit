@@ -2,7 +2,8 @@ import { useState } from "react";
 import { useMutation } from "@apollo/client";
 import { ADD_PHOTO } from "../utils/mutations";
 
-import 
+import CommentForm from '../components/AddComment'
+
 
 
 const UploadPhoto = ({userId}) => {
