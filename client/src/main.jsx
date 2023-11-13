@@ -6,7 +6,8 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 import App from './App';
 import Error from './pages/Error';
-import Post from './pages/Post';
+import YourPost from './pages/YourPost';
+import OnePost from './pages/OnePost';
 import Search from './pages/Search';
 import Comment from './pages/Comment';
 
@@ -21,8 +22,12 @@ const router = createBrowserRouter([
                 element: <Search />,
             },
             {
-                path: '/Post',
-                element: <Post />,
+                path: '/YourPost',
+                element: <YourPost />,
+            },
+            {
+                path: '/OnePost',
+                element: <OnePost />,
             },
             {
                 path: '/Comment',

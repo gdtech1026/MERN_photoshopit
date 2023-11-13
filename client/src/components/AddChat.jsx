@@ -2,11 +2,11 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useMutation } from '@apollo/client';
 
-import { ADD_COMMENT } from '../../utils/mutations';
+import { ADD_COMMENT } from '../utils/mutations';
 
-import Auth from '../../utils/auth';
+import Auth from '../utils/auth';
 
-const CommentForm = ({ photoId }) => {
+const AddChat = ({ photoId }) => {
     const [commentBody, setCommentBody] = useState('');
     const [characterCount, setCharacterCount] = useState(0);
 
@@ -16,7 +16,7 @@ const CommentForm = ({ photoId }) => {
         event.preventDefault();
 
         try {
-            const { data } = await addComment({
+            await addComment({
                 variables: {
                     photoId,
                     commentBody,
@@ -41,7 +41,7 @@ const CommentForm = ({ photoId }) => {
 
     return (
         <div>
-            <h4>What are your thoughts on this photo?</h4>
+            <h4>What are your comments to this photo?</h4>
 
             {Auth.loggedIn() ? (
                 <>
@@ -76,7 +76,7 @@ const CommentForm = ({ photoId }) => {
                 </>
             ) : (
                 <p>
-                    You need to be logged in to share your thoughts and photos. Please{' '}
+                    You need to be logged in to share your comments and photos. Please{' '}
                     <Link to="/login">login</Link> or <Link to="/signup">signup.</Link>
                 </p>
             )}
@@ -84,4 +84,4 @@ const CommentForm = ({ photoId }) => {
     );
 };
 
-export default CommentForm;
+export default AddChat;

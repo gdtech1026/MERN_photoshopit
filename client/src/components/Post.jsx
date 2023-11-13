@@ -1,37 +1,35 @@
-import { useState } from 'react';
-import PostForm from './PostForm';
+import { Link } from 'react-router-dom';
 
-function Post() {
-    const [post, setPost] = useState([]);
-
-    // Function to add a bucket list item
-    const addPostPhoto = (photo) => {
-        console.log(
-            'File: Post.jsx ~ line 10 ~ addPostPhoto ~ photo',
-            photo
-        );
-        // Check to see if the photo image link is active
-        if (!photo.imagelink) {
-            return;
-        }
-
-        // Add the new bucket list item to the existing array of objects
-        const newPost = [photo, ...post];
-        console.log(newPost);
-
-        // Call setPost to update state with our new set of Posted Items
-        setPost(newPost);
-    };
+const Post = ({ photo, title }) => {
+    if (!photo.length) {
+        return <h3>No Photo Flip Yet</h3>;
+    }
 
     return (
         <div>
-            <h1>What is on your Post?</h1>
-            <PostForm onSubmit={addPostPhoto} />
-            <Post
-                photo={photo}
-            ></Post>
+            <h3>{title}</h3>
+            {photo &&
+                photo.map((photo) => (
+                    <div key={photo._id} className="card mb-3">
+                        <h4 className="card-header bg-primary text-light p-2 m-0">
+                            {photo.photoOwner} <br />
+                            <span style={{ fontSize: '1rem' }}>
+                                posted this on {photo.date}
+                            </span>
+                        </h4>
+                        <div className="card-body bg-light p-2">
+                            <p>{photo.description}</p>
+                        </div>
+                        <Link
+                            className="btn btn-primary btn-block btn-squared"
+                            to={`/thoughts/${photo._id}`}
+                        >
+                            Join the discussion on this thought.
+                        </Link>
+                    </div>
+                ))}
         </div>
     );
-}
+};
 
 export default Post;

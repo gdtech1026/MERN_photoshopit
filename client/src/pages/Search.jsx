@@ -9,7 +9,7 @@ import {
 } from 'react-bootstrap';
 
 import Auth from '../utils/auth';
-import { searchPhoto } from '../utils/API';
+// import { searchPhoto } from '../utils/API';
 import { useQuery } from '@apollo/client';
 import { GET_PHOTO } from '../utils/queries';
 import { savePhotoIds, getSavedPhotoIds } from '../utils/localStorage';
@@ -20,7 +20,7 @@ const SearchPhoto = () => {
     // create state for holding our search field data
     const [searchInput, setSearchInput] = useState('');
 
-    // create state to hold saved bookId values
+    // create state to hold saved photoId values
     const [savedPhotoIds, setSavedPhotoIds] = useState(getSavedPhotoIds());
 
     // set up useEffect hook to save `savedPhotoIds` list to localStorage on component unmount
@@ -37,7 +37,7 @@ const SearchPhoto = () => {
         }
 
         try {
-            const response = await searchPhoto(searchInput);
+            const response = await GET_PHOTO(searchInput);
 
             if (!response.ok) {
                 throw new Error('something went wrong!');

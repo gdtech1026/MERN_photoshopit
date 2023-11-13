@@ -31,9 +31,6 @@ mutation addUser($username: String!, $email: String!, $password: String!) {
 
 export const ADD_PHOTO = gql`
 
-# mutation addPhoto($photo: PhotoInput!) {
-#   addPhoto(photos: $photo) {
-
 mutation addPhoto(
   $photoLink: String,
   $description: String!,
@@ -58,8 +55,6 @@ addPhoto(
           commentBody
           likes 
           dislikes
-        }
-        }
       }
     }
   }
@@ -100,7 +95,7 @@ mutation addComment(
   $commentBody: String!
   $createdAt: String!
   $likes: Int!
-  dislikes: Int!
+  $dislikes: Int!
 ) {
   addComment(
     photoId: $photoId
