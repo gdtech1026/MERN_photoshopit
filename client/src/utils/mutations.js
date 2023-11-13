@@ -32,11 +32,11 @@ mutation addUser($username: String!, $email: String!, $password: String!) {
 export const ADD_PHOTO = gql`
 
 mutation addPhoto(
-  $photoLink: String,
+  $imageLink: String,
   $description: String!,
   $deleteHash: String) {
 addPhoto(
-   photoLink: $photoLink,
+   imageLink: $imageLink,
    description: $description,
    deleteHash: $deleteHash) {
         _id
