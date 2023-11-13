@@ -2,12 +2,13 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useMutation } from '@apollo/client';
 
-import { ADD_COMMENT } from '../../utils/mutations';
+import { ADD_COMMENT } from '../utils/mutations';
 
-import Auth from '../../utils/auth';
+import Auth from '../utils/auth';
 
-const CommentForm = ({ photoId }) => {
+const AddChat = ({ photoId }) => {
     const [commentBody, setCommentBody] = useState('');
+    const [imageLink, setImageLink] = useState('');
     const [characterCount, setCharacterCount] = useState(0);
 
     const [addComment, { error }] = useMutation(ADD_COMMENT);
@@ -16,15 +17,17 @@ const CommentForm = ({ photoId }) => {
         event.preventDefault();
 
         try {
-            const { data } = await addComment({
+            await addComment({
                 variables: {
                     photoId,
                     commentBody,
+                    imageLink,
                     username: Auth.getUser().data.username,
                 },
             });
 
             setCommentBody('');
+            setImageLink('');
         } catch (err) {
             console.error(err);
         }
@@ -41,7 +44,7 @@ const CommentForm = ({ photoId }) => {
 
     return (
         <div>
-            <h4>What are your thoughts on this photo?</h4>
+            <h4>What are your comments to this photo?</h4>
 
             {Auth.loggedIn() ? (
                 <>
@@ -58,13 +61,25 @@ const CommentForm = ({ photoId }) => {
                     >
                         <div className="col-12 col-lg-9">
                             <textarea
-                                name="commentText"
-                                placeholder="Add your comment..."
+                                name="commentBody"
+                                placeholder="Enter your comment..."
                                 value={commentBody}
                                 className="form-input w-100"
                                 style={{ lineHeight: '1.5', resize: 'vertical' }}
                                 onChange={handleChange}
                             ></textarea>
+                        </div>
+
+                        <div>
+                            <textarea
+                            name="imageLink"
+                            placeholder="Enter the image link here..."
+                            value={imageLink}
+                            className="form-input w-75"
+                            style={{ lineHeight: '0.5' }}
+                            onChange={handleChange}
+                            >
+                            </textarea>
                         </div>
 
                         <div className="col-12 col-lg-3">
@@ -76,7 +91,7 @@ const CommentForm = ({ photoId }) => {
                 </>
             ) : (
                 <p>
-                    You need to be logged in to share your thoughts and photos. Please{' '}
+                    You need to be logged in to share your comments and photos. Please{' '}
                     <Link to="/login">login</Link> or <Link to="/signup">signup.</Link>
                 </p>
             )}
@@ -84,4 +99,4 @@ const CommentForm = ({ photoId }) => {
     );
 };
 
-export default CommentForm;
+export default AddChat;

@@ -3,7 +3,7 @@ import { gql } from '@apollo/client';
 
 export const GET_ME = gql`
 query me($username: String!) {
-  me($username: $username) {
+  me(username: $username) {
     _id
     username
     email
@@ -20,7 +20,6 @@ query me($username: String!) {
       }
     }
   }
-}
 `;
 
 export const GET_PHOTO = gql`
@@ -38,29 +37,30 @@ query getPhotos {
     }
 `;
 
-export const SINGLE_PHOTO = gql`
-  query getSinglePhoto ($photoId: ID!) {
-    photo(photoId: $photoId) {
-      _id
-      title
-      photoId
-      photoOwner
-      description
-      imageLink
-      deleteHash
-      date
-      comments {
-        _id
-        editPhoto
-        username
-        createdAt
-        commentBody
-        likes 
-        dislikes
+export const GET_COMMENT = gql`
+query getComment {
+  comments {
+    _id
+    username
+    email
+    password
+    photos {
+        title
+        photoId
+        description
+        imagelink
+        date
+        comment {
+          editPhoto
+          user
+          date
+          text
+          likes 
+          dislikes
       }
     }
   }
-
+}
 `
 
 

@@ -7,6 +7,7 @@ import { setContext } from '@apollo/client/link/context';
 import { Outlet } from 'react-router-dom';
 import Nav from './components/Navbar';
 import Footer from './components/Footer';
+import HeaderSpace from './components/HeaderSpace';
 
 const httpLink = createHttpLink({
     uri: '/graphql',
@@ -32,6 +33,7 @@ function App() {
     return (
         <ApolloProvider client={client}>
             <div className="flex-column justify-flex-start min-100-vh">
+                <HeaderSpace />
                 <Nav />
                 <div className="container">
                     <Outlet />
