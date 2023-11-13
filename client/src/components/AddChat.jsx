@@ -8,6 +8,7 @@ import Auth from '../utils/auth';
 
 const AddChat = ({ photoId }) => {
     const [commentBody, setCommentBody] = useState('');
+    const [imageLink, setImageLink] = useState('');
     const [characterCount, setCharacterCount] = useState(0);
 
     const [addComment, { error }] = useMutation(ADD_COMMENT);
@@ -20,11 +21,13 @@ const AddChat = ({ photoId }) => {
                 variables: {
                     photoId,
                     commentBody,
+                    imageLink,
                     username: Auth.getUser().data.username,
                 },
             });
 
             setCommentBody('');
+            setImageLink('');
         } catch (err) {
             console.error(err);
         }
@@ -58,13 +61,25 @@ const AddChat = ({ photoId }) => {
                     >
                         <div className="col-12 col-lg-9">
                             <textarea
-                                name="commentText"
-                                placeholder="Add your comment..."
+                                name="commentBody"
+                                placeholder="Enter your comment..."
                                 value={commentBody}
                                 className="form-input w-100"
                                 style={{ lineHeight: '1.5', resize: 'vertical' }}
                                 onChange={handleChange}
                             ></textarea>
+                        </div>
+
+                        <div>
+                            <textarea
+                            name="imageLink"
+                            placeholder="Enter the image link here..."
+                            value={imageLink}
+                            className="form-input w-75"
+                            style={{ lineHeight: '0.5' }}
+                            onChange={handleChange}
+                            >
+                            </textarea>
                         </div>
 
                         <div className="col-12 col-lg-3">

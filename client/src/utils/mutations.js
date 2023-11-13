@@ -96,6 +96,7 @@ mutation addComment(
   $createdAt: String!
   $likes: Int!
   $dislikes: Int!
+  $imageLink: String!
 ) {
   addComment(
     photoId: $photoId
@@ -103,6 +104,7 @@ mutation addComment(
     createdAt: $createdAt
     likes: $likes
     dislikes: $dislikes    
+    imageLink: $imageLink
   ) {
       _id
       title
