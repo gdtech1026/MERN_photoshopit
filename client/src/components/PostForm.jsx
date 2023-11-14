@@ -7,7 +7,9 @@ import { GET_PHOTO } from '../utils/queries';
 import Auth from '../utils/auth';
 
 const PostForm = () => {
-    const [photo, setPhoto] = useState('');
+    const [Title, setTitle] = useState('');
+    const [imageLink, setImageLink] = useState('');
+    const [description, setDescription] = useState('');
 
     const [addPhoto, { error }] = useMutation(ADD_PHOTO, {
         refetchQueries: [
@@ -20,15 +22,18 @@ const PostForm = () => {
         event.preventDefault();
 
         try {
-            const data = await addPhoto({
+            await addPhoto({
                 variables: {
                     photoOwner: Auth.getUser().data.username,
-                    photoLink,
-                    deleteHash
+                    imageLink,
+                    Title,
+                    description
                 },
             });
 
-            setPhoto('');
+            setDescription('');
+            setImageLink('');
+            setTitle('');
         } catch (err) {
             console.error(err);
         }
@@ -47,9 +52,27 @@ const PostForm = () => {
                         <div className="col-12 col-lg-9">
                             <input
                                 placeholder="Post Photo Flip..."
-                                value={photo}
+                                value={Title}
                                 className="form-input w-100"
-                                onChange={(event) => setPhoto(event.target.value)}
+                                onChange={(event) => setTitle(event.target.value)}
+                            />
+                        </div>
+
+                        <div className="col-12 col-lg-9">
+                            <input
+                                placeholder="Post Photo Flip..."
+                                value={imageLink}
+                                className="form-input w-100"
+                                onChange={(event) => setImageLink(event.target.value)}
+                            />
+                        </div>
+
+                        <div className="col-12 col-lg-9">
+                            <input
+                                placeholder="Post Photo Flip..."
+                                value={description}
+                                className="form-input w-100"
+                                onChange={(event) => setDescription(event.target.value)}
                             />
                         </div>
 
