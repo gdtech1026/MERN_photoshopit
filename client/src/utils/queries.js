@@ -33,6 +33,11 @@ query getPhotos {
       imageLink
       deleteHash
       date
+      comment {
+        editPhoto
+        user
+        date
+        text
       }
     }
 `;
