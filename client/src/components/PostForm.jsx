@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useMutation } from '@apollo/client';
-
 import { ADD_PHOTO } from '../utils/mutations';
 import { GET_PHOTO } from '../utils/queries';
 import Auth from '../utils/auth';
@@ -49,9 +48,9 @@ const PostForm = () => {
                         className="flex-row justify-center justify-space-between-md align-center"
                         onSubmit={handleFormSubmit}
                     >
-                        <div className="col-12 col-lg-9">
+                        <div className="col-12 col-lg-9 ">
                             <input
-                                placeholder="Post Photo Flip..."
+                                placeholder="Post title of your work"
                                 value={Title}
                                 className="form-input w-100"
                                 onChange={(event) => setTitle(event.target.value)}
@@ -60,7 +59,7 @@ const PostForm = () => {
 
                         <div className="col-12 col-lg-9">
                             <input
-                                placeholder="Post Photo Flip..."
+                                placeholder="Image link"
                                 value={imageLink}
                                 className="form-input w-100"
                                 onChange={(event) => setImageLink(event.target.value)}
@@ -69,7 +68,7 @@ const PostForm = () => {
 
                         <div className="col-12 col-lg-9">
                             <input
-                                placeholder="Post Photo Flip..."
+                                placeholder="Post description"
                                 value={description}
                                 className="form-input w-100"
                                 onChange={(event) => setDescription(event.target.value)}
@@ -77,7 +76,7 @@ const PostForm = () => {
                         </div>
 
                         <div className="col-12 col-lg-3">
-                            <button className="btn btn-info btn-block py-3" type="submit">
+                            <button type="submit" >
                                 Post Photo Flip
                             </button>
                         </div>

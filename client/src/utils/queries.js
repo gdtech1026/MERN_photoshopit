@@ -40,6 +40,7 @@ query getPhotos {
         text
       }
     }
+  }
 `;
 
 export const GET_COMMENT = gql`

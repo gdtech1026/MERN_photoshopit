@@ -70,7 +70,7 @@ const AddChat = ({ photoId }) => {
                             ></textarea>
                         </div>
 
-                        <div>
+                        <div className="col-12 col-lg-9">
                             <textarea
                             name="imageLink"
                             placeholder="Enter the image link here..."
@@ -83,7 +83,7 @@ const AddChat = ({ photoId }) => {
                         </div>
 
                         <div className="col-12 col-lg-3">
-                            <button className="btn btn-primary btn-block py-3" type="submit">
+                            <button type="submit">
                                 Add Comment
                             </button>
                         </div>
