@@ -21,12 +21,20 @@ const PostForm = () => {
         event.preventDefault();
 
         try {
+            console.log("addphoto", {
+                photoOwner: Auth.getUser().data.username,
+                imageLink,
+                Title,
+                description,
+                deleteHash: "deleteHash"
+            })
             await addPhoto({
                 variables: {
                     photoOwner: Auth.getUser().data.username,
                     imageLink,
                     Title,
-                    description
+                    description,
+                    deleteHash: "deleteHash"
                 },
             });
 

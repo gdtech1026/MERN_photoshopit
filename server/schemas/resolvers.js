@@ -47,10 +47,11 @@ const resolvers = {
         },
 
         addPhoto: async (parent, { description, photoOwner, title, imageLink }) => {
-
+            
+            console.log("🚀 ~ file: resolvers.js:51 ~ addPhoto: ~ description, photoOwner, title, imageLink:", description, photoOwner, title, imageLink)
             const photo = await Photo.create(
                 {
-                    description, photoOwner, title, imageLink
+                    description, photoOwner, title, imageLink, deleteHash: "deleteHash"
                 });
 
             await User.findOneAndUpdate(

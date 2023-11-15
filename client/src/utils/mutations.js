@@ -34,10 +34,15 @@ export const ADD_PHOTO = gql`
 mutation addPhoto(
   $imageLink: String,
   $description: String!,
-  $deleteHash: String) {
+  $photoOwner: String!,
+  $title: String!,
+  $deleteHash: String
+  ) {
 addPhoto(
    imageLink: $imageLink,
    description: $description,
+   photoOwner: $photoOwner,
+   title: $title,
    deleteHash: $deleteHash) {
         _id
         title

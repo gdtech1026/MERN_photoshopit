@@ -32,10 +32,12 @@ function App() {
     // The Outlet component will conditionally swap between the different pages according to the URL
     return (
         <ApolloProvider client={client}>
-            <div className="flex-column justify-flex-start min-100-vh">
-                <HeaderSpace />
-                <Nav />
-                <div className="container">
+            <Nav />
+            <div>
+                <div className='d-flex justify-content-center'>
+                    <HeaderSpace /> 
+                </div>
+                <div className='justify-content-center'>
                     <Outlet />
                 </div>
                 <Footer />

@@ -30,6 +30,7 @@ const SearchPhoto = () => {
 
     try {
       const response = await GET_PHOTO(searchInput);
+      console.log("🚀 ~ file: Search.jsx:33 ~ handleFormSubmit ~ response:", response)
 
       if (!response.ok) {
         throw new Error("something went wrong!");
@@ -109,7 +110,7 @@ const SearchPhoto = () => {
       </div>
 
       <Container>
-        <h2 className="pt-5">
+        <h2 className="pt-5 text-center">
           {searchedPhoto.length
             ? `Viewing ${searchedPhoto.length} results:`
             : "Search for a photo to begin"}
