@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useMutation } from '@apollo/client';
-
+import { Row } from 'react-bootstrap';
 import { ADD_COMMENT } from '../utils/mutations';
 
 import Auth from '../utils/auth';
@@ -15,7 +15,6 @@ const AddChat = ({ photoId }) => {
 
     const handleFormSubmit = async (event) => {
         event.preventDefault();
-
         try {
             await addComment({
                 variables: {
@@ -23,6 +22,9 @@ const AddChat = ({ photoId }) => {
                     commentBody,
                     imageLink,
                     username: Auth.getUser().data.username,
+                    createdAt: new Date().toISOString(),
+                    likes: 0,
+                    dislikes: 0,
                 },
             });
 
@@ -70,23 +72,25 @@ const AddChat = ({ photoId }) => {
                             ></textarea>
                         </div>
 
+                     
                         <div className="col-12 col-lg-9">
                             <textarea
                             name="imageLink"
                             placeholder="Enter the image link here..."
                             value={imageLink}
-                            className="form-input w-75"
+                            className="form-input w-100"
                             style={{ lineHeight: '0.5' }}
                             onChange={handleChange}
                             >
                             </textarea>
                         </div>
 
-                        <div className="col-12 col-lg-3">
+                        <div className="col-12 text-center">
                             <button type="submit">
                                 Add Comment
                             </button>
                         </div>
+                        
                     </form>
                 </>
             ) : (

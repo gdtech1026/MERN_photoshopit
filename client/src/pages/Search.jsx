@@ -2,18 +2,31 @@ import { useState, useEffect } from "react";
 import { Container, Col, Form, Button, Card, Row } from "react-bootstrap";
 
 import Auth from "../utils/auth";
-import { useQuery } from "@apollo/client";
-import { GET_PHOTO } from "../utils/queries";
+import { useQuery, useLazyQuery } from "@apollo/client";
+import { GET_PHOTO, SEARCH_PHOTO } from "../utils/queries";
 import { savePhotoIds, getSavedPhotoIds } from "../utils/localStorage";
+import { useNavigate } from "react-router-dom";
 
 const SearchPhoto = () => {
+  const navigate = useNavigate();
   // create state for holding returned api data
-  const [searchedPhoto, setSearchedPhoto] = useState([]);
+  // const [searchedPhoto, setSearchedPhoto] = useState([]);
   // create state for holding our search field data
   const [searchInput, setSearchInput] = useState("");
 
   // create state to hold saved photoId values
   const [savedPhotoIds, setSavedPhotoIds] = useState(getSavedPhotoIds());
+  const [loadPhotos, { called, loading, data: allPhotos }] = useLazyQuery(
+    GET_PHOTO,
+    { variables: {} }
+  );
+
+  const [searchPhotos, { called: searchCalled, loading: loadingSearch, data: dataSearch }] = useLazyQuery(
+    SEARCH_PHOTO,
+    { variables: {searchTerm: searchInput} }
+  )
+
+  const searchedPhoto = dataSearch?.searchPhotos || [];
 
   // set up useEffect hook to save `savedPhotoIds` list to localStorage on component unmount
   useEffect(() => {
@@ -23,44 +36,19 @@ const SearchPhoto = () => {
   // create method to search for photo and set state on form submit
   const handleFormSubmit = async (event) => {
     event.preventDefault();
-
     if (!searchInput) {
       return false;
     }
-
-    try {
-      const response = await GET_PHOTO(searchInput);
-      console.log("🚀 ~ file: Search.jsx:33 ~ handleFormSubmit ~ response:", response)
-
-      if (!response.ok) {
-        throw new Error("something went wrong!");
-      }
-
-      const { items } = await response.json();
-
-      const photoData = items.map((photo) => ({
-        photoId: photo.id,
-        username: photo.Info.username || ["No username to display"],
-        title: photo.Info.title,
-        description: photo.volumeInfo.description,
-        imagelink: photo.volumeInfo.imagelink?.thumbnail || "",
-      }));
-
-      setSearchedPhoto(photoData);
-      setSearchInput("");
-    } catch (err) {
-      console.error(err);
-    }
+    searchPhotos()
   };
 
   // create function to handle saving a photo to our database
   const handleSavePhoto = async (photoId) => {
-    // find the book in `searchedPhoto` state by the matching id
+    
+    // // find the book in `searchedPhoto` state by the matching id
     const photoToSave = searchedPhoto.find(
-      (photo) => photo.photoId === photoId
+      (photo) => photo._id === photoId
     );
-
-    const [savePhoto] = useQuery(GET_PHOTO);
 
     // get token
     const token = Auth.loggedIn() ? Auth.getToken() : null;
@@ -68,24 +56,24 @@ const SearchPhoto = () => {
     if (!token) {
       return false;
     }
+    // try {
+    //   const response = await savePhoto(photoToSave, token);
 
-    try {
-      const response = await savePhoto(photoToSave, token);
+    //   if (!response.ok) {
+    //     throw new Error("something went wrong!");
+    //   }
 
-      if (!response.ok) {
-        throw new Error("something went wrong!");
-      }
-
-      // if book successfully saves to user's account, save photo id to state
-      setSavedPhotoIds([...savedPhotoIds, photoToSave.photoId]);
-    } catch (err) {
-      console.error(err);
-    }
+    //   // if book successfully saves to user's account, save photo id to state
+    //   setSavedPhotoIds([...savedPhotoIds, photoToSave.photoId]);
+    // } catch (err) {
+    //   console.error(err);
+    // }
+    setSavedPhotoIds([...savedPhotoIds, photoToSave._id]);
   };
 
   return (
     <>
-      <div className="text-light bg-dark p-5">
+      <div className="text-light bg-dark pt-5 pb-5 px-2">
         <Container>
           <Form onSubmit={handleFormSubmit}>
             <Row>
@@ -97,6 +85,7 @@ const SearchPhoto = () => {
                   type="text"
                   size="lg"
                   placeholder="Search for a photo"
+                  style={{ marginLeft: 0, marginRight: 0 }}
                 />
               </Col>
               <Col xs={12} md={4}>
@@ -108,17 +97,17 @@ const SearchPhoto = () => {
           </Form>
         </Container>
       </div>
-
+      
       <Container>
         <h2 className="pt-5 text-center">
-          {searchedPhoto.length
+          {searchedPhoto?.length
             ? `Viewing ${searchedPhoto.length} results:`
             : "Search for a photo to begin"}
         </h2>
         <Row>
-          {searchedPhoto.map((photo) => {
+          {searchedPhoto?.map((photo) => {
             return (
-              <Col md="4" key={photo.photoId}>
+              <Col key={photo._id} md="4" className="mt-2" >
                 <Card border="dark">
                   {photo.image ? (
                     <Card.Img
@@ -134,18 +123,23 @@ const SearchPhoto = () => {
                     {Auth.loggedIn() && (
                       <Button
                         disabled={savedPhotoIds?.some(
-                          (savedPhotoId) => savedPhotoId === photo.photoId
+                          (savedPhotoId) => savedPhotoId === photo._id
                         )}
                         className="btn-block btn-info"
-                        onClick={() => handleSavePhoto(photo.photoId)}
+                        onClick={() => handleSavePhoto(photo._id)}
                       >
                         {savedPhotoIds?.some(
-                          (savedPhotoId) => savedPhotoId === photo.PhotoId
+                          (savedPhotoId) => savedPhotoId === photo._id
                         )
                           ? "This book has already been saved!"
                           : "Save this Book!"}
                       </Button>
                     )}
+                    <div>
+                      <Button className="btn-block btn-info" onClick={() => { navigate(`/OnePost/${photo._id}`)}}>
+                        View Photo
+                      </Button>
+                    </div>
                   </Card.Body>
                 </Card>
               </Col>

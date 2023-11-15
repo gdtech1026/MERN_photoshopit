@@ -1,4 +1,4 @@
-/* #root {
+#root {
   padding: 2rem;
   text-align: center;
   --Dark-green: #4c6458;
@@ -20,7 +20,7 @@
   box-sizing: border-box;
   padding-left: --New-padding;
   padding-right: --New-padding;
-} */
+}
 /* 
 header {
   font-family: white;
@@ -32,8 +32,6 @@ header {
   display: block;
   justify-content: space-between;
 } */
-
-
 
 /* nav {
   background-color: var(--Dark-green);
@@ -165,4 +163,15 @@ lineUp a {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.bg-dark {
+  background-color: var(--Dark-green) !important;
+}
+.bg-light {
+  background-color: var(--Dark-green) !important;
+}
+
+.text-center {
+  text-align: center !important;
 }

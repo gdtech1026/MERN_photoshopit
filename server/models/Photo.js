@@ -18,7 +18,7 @@ const photoSchema = new Schema({
     date: {
         type: Date,
         default: Date.now,
-        get: (timestamp) => dateFormat(timestamp),
+        get: (timestamp) => Date(timestamp),
     },
     // photoId: {
     //     type: Types.ObjectId,
@@ -36,10 +36,10 @@ const photoSchema = new Schema({
         type: String,
         // required: true,
     },
-    deleteHash: {
-        type: String,
-        // required: true,
-    },
+    // deleteHash: {
+    //     type: String,
+    //     // required: true,
+    // },
     comments: [commentSchema],
 });
 

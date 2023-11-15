@@ -23,7 +23,7 @@ const commentSchema = new Schema(
     createdAt: {
       type: Date,
       default: Date.now,
-      get: (timestamp) => new dateFormat(timestamp).toLocaleString(),
+      get: (timestamp) => new Date(timestamp).toLocaleString(),
     },
     // likes: {
     //   type: Int,

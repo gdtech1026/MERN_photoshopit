@@ -25,9 +25,8 @@ const AppNavbar = () => {
                             </Nav.Link>
                             {Auth.loggedIn() ? (
                                 <>
-
-                                    <Nav.Link as={Link} to='/saved'>
-                                        See Photos
+                                    <Nav.Link as={Link} to='/YourPost'>
+                                        Post Photo
                                     </Nav.Link>
                                     <Nav.Link onClick={Auth.logout}>Logout</Nav.Link>
                                 </>
