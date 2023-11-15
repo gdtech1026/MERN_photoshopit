@@ -2,8 +2,9 @@ import { useState, useEffect } from "react";
 import { Container, Col, Form, Button, Card, Row } from "react-bootstrap";
 
 import Auth from "../utils/auth";
-import { useQuery, useLazyQuery } from "@apollo/client";
-import { GET_PHOTO, SEARCH_PHOTO } from "../utils/queries";
+import { useQuery, useLazyQuery, useMutation } from "@apollo/client";
+import { GET_PHOTO, SEARCH_PHOTO,  } from "../utils/queries";
+import { SAVE_PHOTO } from "../utils/mutations";
 import { savePhotoIds, getSavedPhotoIds } from "../utils/localStorage";
 import { useNavigate } from "react-router-dom";
 
@@ -21,17 +22,15 @@ const SearchPhoto = () => {
     { variables: {} }
   );
 
+  const [savePhoto, { error }] = useMutation(SAVE_PHOTO);
+
+
   const [searchPhotos, { called: searchCalled, loading: loadingSearch, data: dataSearch }] = useLazyQuery(
     SEARCH_PHOTO,
     { variables: {searchTerm: searchInput} }
   )
 
   const searchedPhoto = dataSearch?.searchPhotos || [];
-
-  // set up useEffect hook to save `savedPhotoIds` list to localStorage on component unmount
-  useEffect(() => {
-    return () => savePhotoIds(savedPhotoIds);
-  });
 
   // create method to search for photo and set state on form submit
   const handleFormSubmit = async (event) => {
@@ -49,26 +48,29 @@ const SearchPhoto = () => {
     const photoToSave = searchedPhoto.find(
       (photo) => photo._id === photoId
     );
-
+    
+    console.log("🚀 ~ file: Search.jsx:57 ~ handleSavePhoto ~ photoToSave:", photoToSave)
     // get token
     const token = Auth.loggedIn() ? Auth.getToken() : null;
-
     if (!token) {
       return false;
     }
-    // try {
-    //   const response = await savePhoto(photoToSave, token);
-
-    //   if (!response.ok) {
-    //     throw new Error("something went wrong!");
-    //   }
-
-    //   // if book successfully saves to user's account, save photo id to state
-    //   setSavedPhotoIds([...savedPhotoIds, photoToSave.photoId]);
-    // } catch (err) {
-    //   console.error(err);
-    // }
-    setSavedPhotoIds([...savedPhotoIds, photoToSave._id]);
+    try {
+      console.log("🚀 ~ file: Search.jsx:69 ~ handleSavePhoto ~ photoId:", {
+        photoId,
+            username: Auth.getUser().data.username,
+      })
+      await savePhoto({
+        variables: {
+          photoId,
+          username: Auth.getUser().data.username,
+        },
+      });
+      savePhotoIds([...savedPhotoIds, photoId]);
+      setSavedPhotoIds([...savedPhotoIds, photoId]);
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   return (
@@ -125,7 +127,7 @@ const SearchPhoto = () => {
                         disabled={savedPhotoIds?.some(
                           (savedPhotoId) => savedPhotoId === photo._id
                         )}
-                        className="btn-block btn-info"
+                        className="btn-block btn-success"
                         onClick={() => handleSavePhoto(photo._id)}
                       >
                         {savedPhotoIds?.some(
@@ -136,7 +138,7 @@ const SearchPhoto = () => {
                       </Button>
                     )}
                     <div>
-                      <Button className="btn-block btn-info" onClick={() => { navigate(`/OnePost/${photo._id}`)}}>
+                      <Button className="btn-block btn-success" onClick={() => { navigate(`/OnePost/${photo._id}`)}}>
                         View Photo
                       </Button>
                     </div>

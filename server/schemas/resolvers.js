@@ -68,6 +68,14 @@ const resolvers = {
             return photo;
         },
 
+        savePhoto: async (parent, { photoId, username }) => {
+            return await User.findOneAndUpdate(
+                { username },
+                { $addToSet: { savedPhotos: photoId } }
+            );
+        },
+            
+
         addComment: async (parent, { photoId, commentBody, username }) => {
             if (username){
                 const newComment = { commentBody, username };

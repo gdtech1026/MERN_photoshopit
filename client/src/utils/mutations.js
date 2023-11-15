@@ -114,3 +114,21 @@ mutation addComment(
     }
   }
 `;
+
+export const SAVE_PHOTO = gql`
+mutation savePhoto($photoId: ID!, $username: String!) {
+  savePhoto(photoId: $photoId, username: $username) {
+    _id
+    username
+    email
+    password
+    photos {
+      _id
+      title
+      photoOwner
+      description
+      imageLink
+    }
+  }
+}
+`;

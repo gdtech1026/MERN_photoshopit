@@ -52,6 +52,8 @@ const typeDefs = `
 
     addPhoto(description: String!, photoOwner: String!, title: String!, imageLink: String!): Photo
 
+    savePhoto(photoId: ID!, username: String!): User
+
     addComment(photoId: ID!, commentBody: String!, username: String!): Photo
 
     removePhoto(photoId: ID!): Photo
